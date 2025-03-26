@@ -1,13 +1,14 @@
 import { z } from 'zod';
 import { typeSchema } from './type-schema';
+import { orderByYear } from '../lib/order-by-year';
 
 export const onThisDaySchema = z
   .object({
-    selected: z.array(typeSchema),
-    births: z.array(typeSchema),
-    deaths: z.array(typeSchema),
-    events: z.array(typeSchema),
-    holidays: z.array(typeSchema),
+    selected: z.array(typeSchema).transform((items) => orderByYear(items)),
+    births: z.array(typeSchema).transform((items) => orderByYear(items)),
+    deaths: z.array(typeSchema).transform((items) => orderByYear(items)),
+    events: z.array(typeSchema).transform((items) => orderByYear(items)),
+    holidays: z.array(typeSchema).transform((items) => orderByYear(items)),
   })
   .partial();
 
