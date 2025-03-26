@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithValidation } from '../lib/base-query-with-validation';
+import { getPaddedDate } from '../lib/get-padded-date';
 import { OnThisDay, onThisDaySchema } from '../schema/on-this-day';
 
 export const onThisDayApi = createApi({
@@ -12,13 +13,7 @@ export const onThisDayApi = createApi({
   endpoints: (builder) => ({
     getEvents: builder.query<OnThisDay, void>({
       query() {
-        const [month, day] = new Date()
-          .toLocaleDateString('en-US', {
-            month: '2-digit',
-            day: '2-digit',
-          })
-          .split('/');
-
+        const [month, day] = getPaddedDate();
         return `en/onthisday/all/${month}/${day}`;
       },
       extraOptions: {
