@@ -20,7 +20,9 @@ export function baseQueryWithValidation(baseQuery: TBaseQuery): TBaseQuery {
 
     const returnValue = await baseQuery(args, api, extraOptions);
 
-    extraOptions?.dataSchema?.parse(returnValue.data);
+    if (returnValue.meta?.response?.ok) {
+      extraOptions?.dataSchema?.parse(returnValue.data);
+    }
 
     return returnValue;
   };
