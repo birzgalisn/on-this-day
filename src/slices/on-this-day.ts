@@ -47,7 +47,7 @@ export const onThisDaySlice = createSlice({
           acc[type] = {
             page: DEFAULT_PAGE,
             size: DEFAULT_PAGE_SIZE,
-            total: Math.floor(events.length / DEFAULT_PAGE_SIZE),
+            total: Math.ceil(events.length / DEFAULT_PAGE_SIZE),
           };
 
           return acc;
