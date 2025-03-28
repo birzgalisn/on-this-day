@@ -6,7 +6,7 @@ import type {
   FetchBaseQueryMeta,
 } from '@reduxjs/toolkit/query/react';
 
-type TBaseQuery = BaseQueryFn<
+type BaseQuery = BaseQueryFn<
   string | FetchArgs,
   unknown,
   FetchBaseQueryError | ZodError,
@@ -14,7 +14,7 @@ type TBaseQuery = BaseQueryFn<
   FetchBaseQueryMeta
 >;
 
-export function baseQueryWithValidation(baseQuery: TBaseQuery): TBaseQuery {
+export function baseQueryWithValidation(baseQuery: BaseQuery): BaseQuery {
   return async (args, api, extraOptions) => {
     extraOptions?.argumentSchema?.parse(args);
 
