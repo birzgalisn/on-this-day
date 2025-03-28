@@ -13,3 +13,4 @@ export const onThisDaySchema = z
   .partial();
 
 export type OnThisDay = z.infer<typeof onThisDaySchema>;
+export type OnThisDayType = keyof OnThisDay;
