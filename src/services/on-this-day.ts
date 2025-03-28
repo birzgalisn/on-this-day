@@ -7,14 +7,14 @@ export const onThisDayApi = createApi({
   reducerPath: 'onThisDayApi',
   baseQuery: baseQueryWithValidation(
     fetchBaseQuery({
-      baseUrl: 'https://api.wikimedia.org/feed/v1/wikipedia/',
+      baseUrl: 'https://en.wikipedia.org/api/rest_v1/feed/onthisday/',
     }),
   ),
   endpoints: (builder) => ({
     getEvents: builder.query<OnThisDay, void>({
       query() {
         const [month, day] = getPaddedDate();
-        return `en/onthisday/all/${month}/${day}`;
+        return `all/${month}/${day}`;
       },
       extraOptions: {
         dataSchema: onThisDaySchema,
