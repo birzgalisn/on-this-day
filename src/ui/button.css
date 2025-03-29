@@ -6,6 +6,7 @@
   cursor: pointer;
   transition: all 0.2s ease;
   border: 1px solid transparent;
+  flex-shrink: 0;
 }
 
 .button:disabled {

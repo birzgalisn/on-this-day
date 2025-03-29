@@ -1,13 +1,12 @@
-import type { ButtonHTMLAttributes } from 'react';
 import './button.css';
 
 export type ButtonProps = {
   variant?: 'primary' | 'secondary';
   size?: 'sm' | 'md' | 'lg';
-} & ButtonHTMLAttributes<HTMLButtonElement>;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export function Button({
-  variant = 'secondary',
+  variant = 'primary',
   size = 'md',
   className = '',
   ...props
