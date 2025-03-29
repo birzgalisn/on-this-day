@@ -37,7 +37,6 @@ export function Paginator({
         <Button
           key={visiblePage}
           variant={visiblePage === page ? 'primary' : 'secondary'}
-          className={visiblePage === page ? 'active' : ''}
           onClick={handlePageClick(visiblePage)}
         >
           {visiblePage}
