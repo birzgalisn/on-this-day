@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const eventSchema = z.object({
+export const wikiPageSchema = z.object({
   type: z.enum(['standard', 'disambiguation', 'no-extract', 'mainpage']),
   title: z.string(),
   displaytitle: z.string(),
@@ -55,4 +55,4 @@ export const eventSchema = z.object({
   normalizedtitle: z.string(),
 });
 
-export type Event = z.infer<typeof eventSchema>;
+export type WikiPage = z.infer<typeof wikiPageSchema>;

@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithValidation } from '../lib/base-query-with-validation';
 import { getPaddedDate } from '../lib/get-padded-date';
-import { OnThisDay, onThisDaySchema } from '../schema/on-this-day';
+import { WikiOnThisDay, wikiOnThisDaySchema } from '../schema/wiki-on-this-day';
 
 export const onThisDayApi = createApi({
   reducerPath: 'onThisDayApi',
@@ -11,13 +11,13 @@ export const onThisDayApi = createApi({
     }),
   ),
   endpoints: (builder) => ({
-    getEvents: builder.query<OnThisDay, void>({
+    getEvents: builder.query<WikiOnThisDay, void>({
       query() {
         const [month, day] = getPaddedDate();
         return `all/${month}/${day}`;
       },
       extraOptions: {
-        dataSchema: onThisDaySchema,
+        dataSchema: wikiOnThisDaySchema,
       },
     }),
   }),
