@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { WikiOnThisDayType } from '../schema/wiki-on-this-day';
-import { onThisDayApi } from '../services/on-this-day';
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '../constants/page';
-import { isWikiOnThisDayType } from '../lib/is-wiki-on-this-day-type';
+import { WikiOnThisDayType } from '../../../schema/wiki-on-this-day';
+import { onThisDayApi } from '../services/on-this-day-service';
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '../../../constants/page';
+import { isWikiOnThisDayType } from '../../../lib/is-wiki-on-this-day-type';
 
 export type State = {
   pagination: Partial<
@@ -10,7 +10,7 @@ export type State = {
   >;
 };
 
-export const onThisDaySlice = createSlice({
+const onThisDaySlice = createSlice({
   name: 'onThisDay',
   initialState: {
     pagination: {},
@@ -58,3 +58,7 @@ export const onThisDaySlice = createSlice({
 });
 
 export const { paginate } = onThisDaySlice.actions;
+
+const onThisDayReducer = onThisDaySlice.reducer;
+
+export default onThisDayReducer;

@@ -8,7 +8,7 @@ export const wikiPageSchema = z.object({
     id: z.number(),
     text: z.string(),
   }),
-  wikibase_item: z.string(),
+  wikibase_item: z.string().optional(),
   titles: z.object({
     canonical: z.string(),
     normalized: z.string(),

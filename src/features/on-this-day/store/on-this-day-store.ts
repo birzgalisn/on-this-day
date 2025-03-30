@@ -1,14 +1,16 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { onThisDayApi } from './services/on-this-day';
-import { onThisDaySlice } from './slices/on-this-day';
+import { onThisDayApi } from '../services/on-this-day-service';
+import onThisDayReducer from '../slices/on-this-day-slice';
 
 const rootReducer = combineReducers({
   [onThisDayApi.reducerPath]: onThisDayApi.reducer,
-  [onThisDaySlice.name]: onThisDaySlice.reducer,
+  onThisDay: onThisDayReducer,
 });
 
-export function setupStore(preloadedState?: Partial<RootState>) {
+export function setupOnThisDayStore(
+  preloadedState?: Partial<RootOnThisDayState>,
+) {
   const store = configureStore({
     reducer: rootReducer,
     preloadedState,
@@ -21,6 +23,8 @@ export function setupStore(preloadedState?: Partial<RootState>) {
   return store;
 }
 
-export type RootState = ReturnType<typeof rootReducer>;
-export type AppStore = ReturnType<typeof setupStore>;
-export type AppDispatch = AppStore['dispatch'];
+export type RootOnThisDayState = ReturnType<typeof rootReducer>;
+
+export type OnThisDayStore = ReturnType<typeof setupOnThisDayStore>;
+
+export type OnThisDayDispatch = OnThisDayStore['dispatch'];

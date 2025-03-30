@@ -5,12 +5,12 @@ import {
 } from './article-card-context';
 import { Paginator, PaginatorProps } from './paginator';
 import { EventCard } from './event-card';
-import { paginate } from '../slices/on-this-day';
+import { paginate } from '../features/on-this-day/slices/on-this-day-slice';
 import { WikiOnThisDayType } from '../schema/wiki-on-this-day';
 import { WikiEvent } from '../schema/wiki-event';
 import { WIKI_ON_THIS_DAY_TYPE_MAP } from '../constants/wiki-on-this-day-type-map';
-import { useAppSelector } from '../hooks/use-app-selector';
-import { useAppDispatch } from '../hooks/use-app-dispatch';
+import { useOnThisDayDispatch } from '../features/on-this-day/hooks/use-on-this-day-dispatch';
+import { useOnThisDaySelector } from '../features/on-this-day/hooks/use-on-this-day-selector';
 
 export type ArticleCardProps = {
   type: WikiOnThisDayType;
@@ -41,7 +41,7 @@ ArticleCard.Entries = function ArticleCardEntries({
 
   const { type, entries } = useArticleCardContext();
 
-  const pagination = useAppSelector(
+  const pagination = useOnThisDaySelector(
     (state) => state.onThisDay.pagination[type],
   );
 
@@ -95,9 +95,9 @@ ArticleCard.Paginator = function ArticleCardPaginator(
 ) {
   const { type } = useArticleCardContext();
 
-  const dispatch = useAppDispatch();
+  const dispatch = useOnThisDayDispatch();
 
-  const pagination = useAppSelector(
+  const pagination = useOnThisDaySelector(
     (state) => state.onThisDay.pagination[type],
   );
 

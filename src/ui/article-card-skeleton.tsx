@@ -11,7 +11,7 @@ export function ArticleCardSkeleton({
   const articleId = useId();
 
   return (
-    <section className="full-width">
+    <section className="full-width" aria-label="Loading events">
       {Array.from({ length: eventCount }, (_, idx) => (
         <EventCardSkeleton key={`${articleId}-${idx}`} />
       ))}

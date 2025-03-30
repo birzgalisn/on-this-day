@@ -1,7 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { baseQueryWithValidation } from '../lib/base-query-with-validation';
-import { getPaddedDate } from '../lib/get-padded-date';
-import { WikiOnThisDay, wikiOnThisDaySchema } from '../schema/wiki-on-this-day';
+import { baseQueryWithValidation } from '../../../lib/base-query-with-validation';
+import { getPaddedDate } from '../../../lib/get-padded-date';
+import {
+  WikiOnThisDay,
+  wikiOnThisDaySchema,
+} from '../../../schema/wiki-on-this-day';
 
 export const onThisDayApi = createApi({
   reducerPath: 'onThisDayApi',
