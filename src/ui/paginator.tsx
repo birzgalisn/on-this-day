@@ -29,6 +29,7 @@ export function Paginator({
         variant="secondary"
         onClick={() => onChange(Math.max(page - 1, DEFAULT_PAGE))}
         disabled={page === DEFAULT_PAGE}
+        aria-label="Previous page"
       >
         <ChevronLeft />
       </Button>
@@ -38,6 +39,7 @@ export function Paginator({
           key={visiblePage}
           variant={visiblePage === page ? 'primary' : 'secondary'}
           onClick={handlePageClick(visiblePage)}
+          aria-label={`Page ${visiblePage}`}
         >
           {visiblePage}
         </Button>
@@ -47,6 +49,7 @@ export function Paginator({
         variant="secondary"
         onClick={() => onChange(Math.min(page + 1, total))}
         disabled={page === total}
+        aria-label="Next page"
       >
         <ChevronRight />
       </Button>
