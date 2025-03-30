@@ -69,7 +69,7 @@ function renderOnThisDay() {
   return {
     ...result,
     get fetchEventsButton() {
-      return screen.getByText(new RegExp('What did happen on this day?', 'i'));
+      return screen.getByText(new RegExp('What happened on this day?', 'i'));
     },
     get skeletonLoader() {
       return screen.getByLabelText(new RegExp('Loading events', 'i'));

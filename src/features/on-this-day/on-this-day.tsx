@@ -1,7 +1,7 @@
-import { ON_THIS_DAY_ZOD_ERROR_MAP } from './constants/on-this-day-zod-error-map';
 import { useOnThisDay } from './hooks/use-on-this-day';
 import { OnThisDayContainer } from './components/on-this-day-container';
-import { isZodError } from '../../lib/is-zod-error';
+import { OnThisDayErrorModal } from './components/on-this-day-error-modal';
+import { useTrigger } from '../../hooks/use-trigger';
 import { Button } from '../../ui/button';
 import { ArticleCard } from '../../ui/article-card';
 import { ArticleCardSkeleton } from '../../ui/article-card-skeleton';
@@ -10,20 +10,26 @@ import { Notification } from '../../ui/notification';
 export function OnThisDay() {
   const [fetchTodaysEvents, result] = useOnThisDay();
 
+  const [isErrorVisible, toggleErrorVisibility] = useTrigger(result.isError);
+
   return (
     <OnThisDayContainer>
       {result.isQueryable && (
-        <Button onClick={() => fetchTodaysEvents()}>
-          What did happen on this day?
+        <Button
+          disabled={result.isFetching}
+          onClick={() => fetchTodaysEvents()}
+        >
+          What happened on this day?
         </Button>
       )}
 
       {result.isSkeleton && <ArticleCardSkeleton />}
 
-      {result.isError && (
-        <Notification type="error">
-          {ON_THIS_DAY_ZOD_ERROR_MAP[`${isZodError(result.error)}`]}
-        </Notification>
+      {isErrorVisible && (
+        <OnThisDayErrorModal
+          error={result.error}
+          onClick={() => toggleErrorVisibility(false)}
+        />
       )}
 
       {result.isEmpty && (
