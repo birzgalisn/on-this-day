@@ -17,26 +17,23 @@ describe('OnThisDay', () => {
 
   afterAll(() => onThisDayServer.close());
 
-  describe.each(Object.values(WIKI_ON_THIS_DAY_TYPE_MAP))(
-    "section '%s'",
-    (title) => {
-      it('shows loading state', async () => {
-        const result = renderOnThisDay();
+  describe.each([WIKI_ON_THIS_DAY_TYPE_MAP.births])("section '%s'", (title) => {
+    it('shows loading state', async () => {
+      const result = renderOnThisDay();
 
-        await userEvent.click(result.fetchEventsButton);
+      await userEvent.click(result.fetchEventsButton);
 
-        expect(result.skeletonLoader).toBeInTheDocument();
-      });
+      expect(result.skeletonLoader).toBeInTheDocument();
+    });
 
-      it('shows loaded events', async () => {
-        const result = renderOnThisDay();
+    it('shows loaded events', async () => {
+      const result = renderOnThisDay();
 
-        await userEvent.click(result.fetchEventsButton);
+      await userEvent.click(result.fetchEventsButton);
 
-        expect(await screen.findByText(title)).toBeInTheDocument();
-      });
-    },
-  );
+      expect(await screen.findByText(title)).toBeInTheDocument();
+    });
+  });
 
   it('shows network error message', async () => {
     mockOnThisDayServerError();

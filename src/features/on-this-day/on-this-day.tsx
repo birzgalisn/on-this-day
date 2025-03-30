@@ -39,7 +39,7 @@ export function OnThisDay() {
       )}
 
       {result.isRenderable && (
-        <section className={`${result.isFetching ? 'pulse' : ''}`}>
+        <section className={`full-width ${result.isFetching ? 'pulse' : ''}`}>
           {result.entries.map(([type, entries]) => (
             <ArticleCard key={type} {...{ type, entries }}>
               <ArticleCard.Title />

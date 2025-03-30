@@ -17,7 +17,7 @@ export const onThisDayApi = createApi({
     getEvents: builder.query<WikiOnThisDay, void>({
       query() {
         const [month, day] = getPaddedDate();
-        return `all/${month}/${day}`;
+        return `births/${month}/${day}`;
       },
       extraOptions: {
         dataSchema: wikiOnThisDaySchema,

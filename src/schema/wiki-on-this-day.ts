@@ -3,11 +3,7 @@ import { wikiEventSchema } from './wiki-event';
 
 export const wikiOnThisDaySchema = z
   .object({
-    selected: z.array(wikiEventSchema),
     births: z.array(wikiEventSchema),
-    deaths: z.array(wikiEventSchema),
-    events: z.array(wikiEventSchema),
-    holidays: z.array(wikiEventSchema),
   })
   .partial();
 

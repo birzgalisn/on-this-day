@@ -6,14 +6,14 @@ import { useLazyGetEventsQuery } from '../services/on-this-day-service';
 import { RootOnThisDayState } from '../store/on-this-day-store';
 import onThisDayReducer, { paginate } from './on-this-day-slice';
 
-const SELECTED = {
+const BIRTHS = {
   page: 1,
   total: 100,
   size: DEFAULT_PAGE_SIZE,
-} satisfies RootOnThisDayState['onThisDay']['pagination']['selected'];
+} satisfies RootOnThisDayState['onThisDay']['pagination']['births'];
 
 const STATE = {
-  pagination: { selected: SELECTED },
+  pagination: { births: BIRTHS },
 } satisfies RootOnThisDayState['onThisDay'];
 
 describe('OnThisDay slice', () => {
@@ -24,7 +24,7 @@ describe('OnThisDay slice', () => {
   afterAll(() => onThisDayServer.close());
 
   it('should build pagiante action with default page size', () => {
-    const args = { type: 'selected', page: 2 } as const;
+    const args = { type: 'births', page: 2 } as const;
 
     const action = paginate(args);
 
@@ -37,19 +37,13 @@ describe('OnThisDay slice', () => {
   });
 
   it('should paginate initialized events', () => {
-    const action = paginate({ type: 'selected', page: 2 });
+    const action = paginate({ type: 'births', page: 2 });
 
     const expected = {
-      pagination: { selected: { ...SELECTED, page: action.payload.page } },
+      pagination: { births: { ...BIRTHS, page: action.payload.page } },
     } as const;
 
     expect(onThisDayReducer(STATE, action)).toEqual(expected);
-  });
-
-  it('should dismiss uninitiazlied events', () => {
-    const action = paginate({ type: 'holidays', page: 2 });
-
-    expect(onThisDayReducer(STATE, action)).toEqual(STATE);
   });
 
   it('should initialize pagination after fetching events', async () => {
@@ -61,13 +55,7 @@ describe('OnThisDay slice', () => {
 
     const { pagination } = store.getState().onThisDay;
 
-    const expected = {
-      births: { page: 1, size: 2, total: 3 },
-      deaths: { page: 1, size: 2, total: 3 },
-      events: { page: 1, size: 2, total: 3 },
-      holidays: { page: 1, size: 2, total: 3 },
-      selected: { page: 1, size: 2, total: 3 },
-    } as const;
+    const expected = { births: { page: 1, size: 2, total: 3 } } as const;
 
     expect(pagination).toEqual(expected);
   });
