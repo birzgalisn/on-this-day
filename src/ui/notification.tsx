@@ -17,7 +17,7 @@ export function Notification({
     >
       {children || (
         <p>
-          {type === 'success'
+          {type === 'info' || type === 'success'
             ? 'Operation was successful'
             : 'An error occurred'}
         </p>
