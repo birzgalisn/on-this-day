@@ -1,19 +1,26 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { onThisDayApi } from './services/on-this-day';
 import { onThisDaySlice } from './slices/on-this-day';
 
-export const store = configureStore({
-  reducer: {
-    [onThisDayApi.reducerPath]: onThisDayApi.reducer,
-    [onThisDaySlice.name]: onThisDaySlice.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(onThisDayApi.middleware),
+const rootReducer = combineReducers({
+  [onThisDayApi.reducerPath]: onThisDayApi.reducer,
+  [onThisDaySlice.name]: onThisDaySlice.reducer,
 });
 
-setupListeners(store.dispatch);
+export function setupStore(preloadedState?: Partial<RootState>) {
+  const store = configureStore({
+    reducer: rootReducer,
+    preloadedState,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(onThisDayApi.middleware),
+  });
 
-export type AppStore = typeof store;
-export type RootState = ReturnType<AppStore['getState']>;
+  setupListeners(store.dispatch);
+
+  return store;
+}
+
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppStore = ReturnType<typeof setupStore>;
 export type AppDispatch = AppStore['dispatch'];
