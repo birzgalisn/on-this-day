@@ -5,6 +5,10 @@
   gap: 0.25rem;
 }
 
+.paginator > button {
+  user-select: none;
+}
+
 .paginator > :first-child {
   margin-right: 0.5rem;
 }
