@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux';
-import { render } from '@testing-library/react';
+import { render, renderHook } from '@testing-library/react';
 import { RenderOptions } from '@testing-library/react';
 import {
   setupOnThisDayStore,
@@ -27,5 +27,23 @@ export function renderWithProviders(
   return {
     store,
     ...render(ui, { wrapper: Wrapper, ...renderOptions }),
+  } as const;
+}
+
+export function renderHookWithProviders<T>(
+  hook: () => T,
+  {
+    preloadedState = {},
+    store = setupOnThisDayStore(preloadedState),
+    ...renderOptions
+  }: ExtendedRenderOptions = {},
+) {
+  const Wrapper = ({ children }: React.PropsWithChildren) => (
+    <Provider store={store}>{children}</Provider>
+  );
+
+  return {
+    store,
+    ...renderHook(hook, { wrapper: Wrapper, ...renderOptions }),
   } as const;
 }
