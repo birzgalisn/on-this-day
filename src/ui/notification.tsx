@@ -5,7 +5,7 @@ export type NotificationProps = {
 } & React.HTMLAttributes<HTMLDivElement>;
 
 export function Notification({
-  type,
+  type = 'info',
   className = '',
   children,
   ...props
