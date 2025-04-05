@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function Cross(props: React.HTMLAttributes<SVGSVGElement>) {
   return (
     <svg

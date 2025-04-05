@@ -16,7 +16,7 @@ const STATE = {
   pagination: { births: BIRTHS },
 } satisfies RootOnThisDayState['onThisDay'];
 
-describe('OnThisDay slice', () => {
+describe('onThisDaySlice', () => {
   beforeAll(() => onThisDayServer.listen());
 
   afterEach(() => onThisDayServer.resetHandlers());

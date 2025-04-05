@@ -1,6 +1,10 @@
 import { useMemo } from 'react';
 
-export function useVisiblePages(page: number, total: number, surrounding = 2) {
+export function useVisiblePages(
+  page: number,
+  total: number,
+  surrounding = 2,
+): Readonly<number[]> {
   return useMemo(() => {
     const start = Math.max(1, page - surrounding);
     const end = Math.min(total, page + surrounding);

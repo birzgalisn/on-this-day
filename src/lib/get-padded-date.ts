@@ -1,6 +1,6 @@
 export function getPaddedDate({
   date,
-  yearFormat,
+  yearFormat = 'numeric',
 }: Partial<{
   date: Date;
   yearFormat: Intl.DateTimeFormatOptions['year'];
@@ -11,7 +11,7 @@ export function getPaddedDate({
       day: '2-digit',
       year: yearFormat,
     })
-    .split('/');
+    .split(/\D+/);
 
-  return [month, day, year];
+  return [month, day, year] as const;
 }
