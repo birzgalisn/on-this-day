@@ -46,11 +46,11 @@ describe('Paginator', () => {
     ['Previous page', 1, 10],
     ['Next page', 10, 10],
   ])(`'%s' button`, (aria, page, total) => {
-    const onChange = vi.fn();
+    const setPage = vi.fn();
     let button: HTMLElement | null = null;
 
     beforeEach(() => {
-      const { paginator } = renderPaginator({ page, total, onChange });
+      const { paginator } = renderPaginator({ page, total, setPage });
       button = paginator.querySelector(`button[aria-label="${aria}"]`);
     });
 
@@ -67,7 +67,7 @@ describe('Paginator', () => {
 
       await userEvent.click(button);
 
-      expect(onChange).not.toHaveBeenCalled();
+      expect(setPage).not.toHaveBeenCalled();
     });
   });
 
@@ -79,17 +79,20 @@ describe('Paginator', () => {
   ])(
     `handles '%s' click correctly when page is ${PAGINATOR_PROPS.page}, total is ${PAGINATOR_PROPS.total}`,
     async (aria, result) => {
-      const onChange = vi.fn();
-      const { paginator } = renderPaginator({ onChange });
-      const button = paginator.querySelector(`button[aria-label="${aria}"]`);
+      const setPage = vi.fn();
+      const { paginator } = renderPaginator({ setPage });
 
-      if (!button) {
+      const pageButton = paginator.querySelector(
+        `button[aria-label="${aria}"]`,
+      );
+
+      if (!pageButton) {
         throw new Error(`There should be a '${aria}' button`);
       }
 
-      await userEvent.click(button);
+      await userEvent.click(pageButton);
 
-      expect(onChange).toHaveBeenCalledExactlyOnceWith(result);
+      expect(setPage).toHaveBeenCalledExactlyOnceWith(result);
     },
   );
 });
@@ -97,11 +100,33 @@ describe('Paginator', () => {
 const PAGINATOR_PROPS = Object.freeze({
   page: 5,
   total: 10,
-  onChange: vi.fn(),
-} satisfies PaginatorProps);
+  size: 2,
+  setPage: vi.fn(),
+});
 
-function renderPaginator({ ...props }: Partial<PaginatorProps> = {}) {
-  const result = render(<Paginator {...PAGINATOR_PROPS} {...props} />);
+function renderPaginator({
+  page = PAGINATOR_PROPS.page,
+  total = PAGINATOR_PROPS.total,
+  size = PAGINATOR_PROPS.size,
+  setPage = PAGINATOR_PROPS.setPage,
+  ...props
+}: Partial<
+  {
+    page: number;
+    total: number;
+    surrounding: number;
+    setPage: () => void;
+  } & PaginatorProps<void>
+> = {}) {
+  const entries = Array<void>(total * size);
+
+  const usePage = () => [page, setPage] as const;
+
+  const result = render(
+    <Paginator {...{ entries, size, usePage }} {...props}>
+      <Paginator.Pages />
+    </Paginator>,
+  );
 
   return {
     ...result,
