@@ -16,6 +16,7 @@ export function setupOnThisDayStore(
     preloadedState,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(onThisDayApi.middleware),
+    devTools: import.meta.env.DEV,
   });
 
   setupListeners(store.dispatch);
