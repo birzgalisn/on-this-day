@@ -4,28 +4,24 @@ Fetches notable people born on the given date from Wikipedia "On this day" API.
 
 ## Requirements
 
-[bun](https://bun.sh) is recommended to be used to install all necessary packages.
-
-Although, everything should install just fine with [node](https://nodejs.org/en) and [npm](https://www.npmjs.com).
+[node](https://nodejs.org/en) (22.14.0 and later) and [npm](https://www.npmjs.com) (10.9.2 and later) is recommended to be used to install all necessary packages.
 
 ## Steps
 
-1. Install all the necessary packages with `bun i` or `npm i`
+1. Install all the necessary packages with `npm i`
 
 ## Commands
 
-Use `bun` to invoke commands.
+Use `npm` to invoke commands.
 
-Or replace `bun` with `npm` if it was used to install the packages.
+- `npm run dev` - starts development server
 
-- `bun run dev` - starts development server
+- `npm run test` - runs tests
 
-- `bun run test` - runs tests
+- `npm run coverage` - generates coverage
 
-- `bun run coverage` - generates coverage
+- `npm run build` - generates production build
 
-- `bun run build` - generates production build
+- `npm run preview` - starts production preview server
 
-- `bun run preview` - starts production preview server
-
-- `bun run format` - formats files
+- `npm run format` - formats files

@@ -10,7 +10,7 @@ services:
       context: .
       dockerfile: Dockerfile
       target: install
-    command: bun run dev --host
+    command: npm run dev -- --host
     env_file: .env
     volumes:
       - ./:/app
