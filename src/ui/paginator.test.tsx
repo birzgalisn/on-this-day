@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { UsePaginationType } from '../hooks/use-pagination';
 import { Paginator, PaginatorProps } from './paginator';
 
 describe('Paginator', () => {
@@ -46,11 +47,11 @@ describe('Paginator', () => {
     ['Previous page', 1, 10],
     ['Next page', 10, 10],
   ])(`'%s' button`, (aria, page, total) => {
-    const setPage = vi.fn();
+    const updatePagination = vi.fn();
     let button: HTMLElement | null = null;
 
     beforeEach(() => {
-      const { paginator } = renderPaginator({ page, total, setPage });
+      const { paginator } = renderPaginator({ page, total, updatePagination });
       button = paginator.querySelector(`button[aria-label="${aria}"]`);
     });
 
@@ -67,7 +68,7 @@ describe('Paginator', () => {
 
       await userEvent.click(button);
 
-      expect(setPage).not.toHaveBeenCalled();
+      expect(updatePagination).not.toHaveBeenCalled();
     });
   });
 
@@ -78,9 +79,9 @@ describe('Paginator', () => {
     [`Page ${PAGINATOR_PROPS.page + 1}`, PAGINATOR_PROPS.page + 1],
   ])(
     `handles '%s' click correctly when page is ${PAGINATOR_PROPS.page}, total is ${PAGINATOR_PROPS.total}`,
-    async (aria, result) => {
-      const setPage = vi.fn();
-      const { paginator } = renderPaginator({ setPage });
+    async (aria, page) => {
+      const updatePagination = vi.fn();
+      const { paginator } = renderPaginator({ updatePagination });
 
       const pageButton = paginator.querySelector(
         `button[aria-label="${aria}"]`,
@@ -92,38 +93,43 @@ describe('Paginator', () => {
 
       await userEvent.click(pageButton);
 
-      expect(setPage).toHaveBeenCalledExactlyOnceWith(result);
+      expect(updatePagination).toHaveBeenCalledExactlyOnceWith({ page });
     },
   );
 });
 
 const PAGINATOR_PROPS = Object.freeze({
   page: 5,
-  total: 10,
   size: 2,
-  setPage: vi.fn(),
+  surrounding: 2,
+  total: 10,
+  updatePagination: vi.fn(),
 });
 
 function renderPaginator({
   page = PAGINATOR_PROPS.page,
   total = PAGINATOR_PROPS.total,
   size = PAGINATOR_PROPS.size,
-  setPage = PAGINATOR_PROPS.setPage,
+  surrounding = PAGINATOR_PROPS.surrounding,
+  updatePagination = PAGINATOR_PROPS.updatePagination,
   ...props
 }: Partial<
   {
     page: number;
     total: number;
     surrounding: number;
-    setPage: () => void;
+    updatePagination: () => void;
   } & PaginatorProps<void>
 > = {}) {
   const entries = Array<void>(total * size);
 
-  const usePage = () => [page, setPage] as const;
+  const usePagination = (): UsePaginationType => [
+    { page, size, total, surrounding, paginated: [] },
+    updatePagination,
+  ];
 
   const result = render(
-    <Paginator {...{ entries, size, usePage }} {...props}>
+    <Paginator {...{ entries, usePagination }} {...props}>
       <Paginator.Pages />
     </Paginator>,
   );

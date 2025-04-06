@@ -1,10 +1,13 @@
-import { OnThisDayContainer } from '../components/on-this-day-container';
+import {
+  OnThisDayContainer,
+  OnThisDayContainerProps,
+} from '../components/on-this-day-container';
 
 export function withOnThisDayContainer<
   Props extends React.JSX.IntrinsicAttributes,
->() {
+>(containerProps: OnThisDayContainerProps = {}) {
   return (ContentComponent: React.FC<Props>) => (props: Props) => (
-    <OnThisDayContainer>
+    <OnThisDayContainer {...containerProps}>
       <ContentComponent {...props} />
     </OnThisDayContainer>
   );

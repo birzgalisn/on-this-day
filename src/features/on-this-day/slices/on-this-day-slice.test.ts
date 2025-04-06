@@ -1,7 +1,10 @@
 import { act } from '@testing-library/react';
 import { onThisDayServer } from '../__tests__/on-this-day-node';
 import { renderHookWithProviders } from '../__tests__/on-this-day-utils';
-import { DEFAULT_PAGE_SIZE } from '../../../constants/page';
+import {
+  DEFAULT_PAGE_SIZE,
+  DEFAULT_PAGE_SURROUNDING,
+} from '../../../constants/page';
 import { useLazyGetEventsQuery } from '../services/on-this-day-service';
 import { RootOnThisDayState } from '../store/on-this-day-store';
 import onThisDayReducer, { paginate } from './on-this-day-slice';
@@ -10,6 +13,7 @@ const BIRTHS = {
   page: 1,
   total: 100,
   size: DEFAULT_PAGE_SIZE,
+  surrounding: DEFAULT_PAGE_SURROUNDING,
 } satisfies RootOnThisDayState['onThisDay']['pagination']['births'];
 
 const STATE = {
@@ -28,10 +32,7 @@ describe('onThisDaySlice', () => {
 
     const action = paginate(args);
 
-    const expected = {
-      type: 'onThisDay/paginate',
-      payload: { ...args, size: DEFAULT_PAGE_SIZE },
-    } as const;
+    const expected = { type: 'onThisDay/paginate', payload: args } as const;
 
     expect(action).toEqual(expected);
   });
@@ -55,7 +56,9 @@ describe('onThisDaySlice', () => {
 
     const { pagination } = store.getState().onThisDay;
 
-    const expected = { births: { page: 1, size: 2, total: 3 } } as const;
+    const expected = {
+      births: { ...BIRTHS, page: 1, size: 2, total: 3 },
+    } as const;
 
     expect(pagination).toEqual(expected);
   });

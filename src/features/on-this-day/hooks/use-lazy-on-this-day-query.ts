@@ -4,7 +4,7 @@ import { useLazyGetEventsQuery } from '../services/on-this-day-service';
 import { WikiOnThisDayType } from '../../../schema/wiki-on-this-day';
 import { WikiEvent } from '../../../schema/wiki-event';
 
-export function useOnThisDay() {
+export function useLazyOnThisDayQuery() {
   const [trigger, result] = useLazyGetEventsQuery();
 
   const entries = useMemo(() => {

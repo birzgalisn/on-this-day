@@ -1,51 +1,55 @@
-import React, { useId, useState } from 'react';
+import React, { useId } from 'react';
 import { PaginatorContext, usePaginatorContext } from './paginator-context';
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '../constants/page';
+import { DEFAULT_PAGE } from '../constants/page';
 import { ChevronLeft } from '../icons/chevron-left';
 import { ChevronRight } from '../icons/chevron-right';
+import { usePagination as useDefaultPagination } from '../hooks/use-pagination';
 import { useVisiblePages } from '../hooks/use-visible-pages';
 import { Button } from './button';
 import './paginator.css';
+import { buildInitialPagination } from '../lib/build-initial-pagination';
 
 export type PaginatorProps<T> = {
   entries: T[];
+  page?: number;
   size?: number;
-  usePage?: (
-    initialPage: number,
-  ) => Readonly<[page: number, setPage: (page: number) => void]>;
+  surrounding?: number;
+  usePagination?: typeof useDefaultPagination;
 } & React.PropsWithChildren;
 
 export function Paginator<T>({
+  usePagination = useDefaultPagination,
   entries,
-  size = DEFAULT_PAGE_SIZE,
-  usePage = useState,
   children,
+  ...override
 }: PaginatorProps<T>) {
-  const [page, setPage] = usePage(DEFAULT_PAGE);
-  const total = Math.ceil(entries.length / size);
+  const paginator = usePagination({
+    ...buildInitialPagination({ ...override, count: entries.length }),
+    entries,
+  });
 
   return (
-    <PaginatorContext.Provider value={{ entries, page, size, total, setPage }}>
+    <PaginatorContext.Provider value={paginator}>
       {children}
     </PaginatorContext.Provider>
   );
 }
 
+export type PaginatorEntriesProps<T> = {
+  children: ({ entry }: { entry: T }) => React.JSX.Element;
+} & Omit<React.HTMLProps<HTMLDivElement>, 'children'>;
+
 Paginator.Entries = function PaginatorEntries<T>({
   children,
   className = '',
   ...props
-}: {
-  children: ({ entry }: { entry: T }) => React.JSX.Element;
-} & Omit<React.HTMLProps<HTMLDivElement>, 'children'>) {
-  const { entries, page, size } = usePaginatorContext();
+}: PaginatorEntriesProps<T>) {
+  const [pagination] = usePaginatorContext();
   const paginatorId = useId();
-
-  const start = (page - 1) * size;
 
   return (
     <div className={`list column ${className}`} {...props}>
-      {entries.slice(start, start + size).map((entry, idx) => (
+      {pagination.paginated.map((entry, idx) => (
         <React.Fragment key={`${paginatorId}-${idx}`}>
           {children({ entry } as { entry: T })}
         </React.Fragment>
@@ -54,24 +58,26 @@ Paginator.Entries = function PaginatorEntries<T>({
   );
 };
 
+export type PaginatorPagesProps = Pick<
+  React.HTMLProps<HTMLDivElement>,
+  'className'
+>;
+
 Paginator.Pages = function PaginatorPages({
-  surrounding = 2,
   className = '',
-}: {
-  surrounding?: number;
-} & Pick<React.HTMLProps<HTMLDivElement>, 'className'>) {
-  const { page, total, setPage } = usePaginatorContext();
+}: PaginatorPagesProps) {
+  const [pagination, updatePagination] = usePaginatorContext();
 
-  const handlePageClick = (page: number) => () => setPage(page);
+  const handlePageClick = (page: number) => () => updatePagination({ page });
 
-  const visiblePages = useVisiblePages(page, total, surrounding);
+  const visiblePages = useVisiblePages(pagination);
 
   return (
     <nav className={`paginator ${className}`}>
       <Button
         variant="secondary"
-        onClick={handlePageClick(Math.max(page - 1, DEFAULT_PAGE))}
-        disabled={page === DEFAULT_PAGE}
+        onClick={handlePageClick(Math.max(pagination.page - 1, DEFAULT_PAGE))}
+        disabled={pagination.page === DEFAULT_PAGE}
         aria-label="Previous page"
       >
         <ChevronLeft />
@@ -80,7 +86,7 @@ Paginator.Pages = function PaginatorPages({
       {visiblePages.map((visiblePage) => (
         <Button
           key={visiblePage}
-          variant={visiblePage === page ? 'primary' : 'secondary'}
+          variant={visiblePage === pagination.page ? 'primary' : 'secondary'}
           onClick={handlePageClick(visiblePage)}
           aria-label={`Page ${visiblePage}`}
         >
@@ -90,8 +96,10 @@ Paginator.Pages = function PaginatorPages({
 
       <Button
         variant="secondary"
-        onClick={handlePageClick(Math.min(page + 1, total))}
-        disabled={page === total}
+        onClick={handlePageClick(
+          Math.min(pagination.page + 1, pagination.total),
+        )}
+        disabled={pagination.page === pagination.total}
         aria-label="Next page"
       >
         <ChevronRight />

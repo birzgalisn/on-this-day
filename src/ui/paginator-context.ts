@@ -1,12 +1,7 @@
 import { createContext, useContext } from 'react';
+import { UsePaginationType } from '../hooks/use-pagination';
 
-export const PaginatorContext = createContext<{
-  entries: unknown[];
-  page: number;
-  size: number;
-  total: number;
-  setPage: (page: number) => void;
-} | null>(null);
+export const PaginatorContext = createContext<UsePaginationType | null>(null);
 
 export function usePaginatorContext() {
   const pagiantorContext = useContext(PaginatorContext);

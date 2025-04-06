@@ -1,6 +1,6 @@
 import { EventCardContext, useEventCardContext } from './event-card-context';
 import { PageCard } from './page-card';
-import { Paginator, PaginatorProps } from './paginator';
+import { Paginator, PaginatorEntriesProps, PaginatorProps } from './paginator';
 import { WikiEvent } from '../schema/wiki-event';
 import { WikiPage } from '../schema/wiki-page';
 
@@ -40,32 +40,37 @@ EventCard.Title = function EventCardTitle({
   );
 };
 
-EventCard.Entries = function EventCardEntries({
+function EventCardPaginator(props: Omit<PaginatorProps<WikiPage>, 'entries'>) {
+  const { event } = useEventCardContext();
+
+  return <Paginator<WikiPage> entries={event.pages} {...props} />;
+}
+
+EventCardPaginator.Entries = function EventCardPaginatorEntries({
   children,
   ...props
 }: {
   children?: ({ page }: { page: WikiPage }) => React.JSX.Element;
-} & Omit<PaginatorProps<WikiPage>, 'entries' | 'children'>) {
-  const { event } = useEventCardContext();
-
+} & Omit<PaginatorEntriesProps<WikiPage>, 'children'>) {
   return (
-    <Paginator entries={event.pages} {...props}>
-      <Paginator.Entries<WikiPage>>
-        {({ entry: page }) =>
-          children ? (
-            children({ page })
-          ) : (
-            <PageCard page={page}>
-              <PageCard.Thumbnail />
-              <PageCard.Content>
-                <PageCard.Title />
-                <PageCard.Description />
-              </PageCard.Content>
-            </PageCard>
-          )
-        }
-      </Paginator.Entries>
-      <Paginator.Pages />
-    </Paginator>
+    <Paginator.Entries<WikiPage> {...props}>
+      {({ entry: page }) =>
+        children ? (
+          children({ page })
+        ) : (
+          <PageCard page={page}>
+            <PageCard.Thumbnail />
+            <PageCard.Content>
+              <PageCard.Title />
+              <PageCard.Description />
+            </PageCard.Content>
+          </PageCard>
+        )
+      }
+    </Paginator.Entries>
   );
 };
+
+EventCardPaginator.Pages = Paginator.Pages;
+
+EventCard.Paginator = EventCardPaginator;

@@ -1,13 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { WikiOnThisDayType } from '../../../schema/wiki-on-this-day';
 import { onThisDayApi } from '../services/on-this-day-service';
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '../../../constants/page';
+import { WikiOnThisDayType } from '../../../schema/wiki-on-this-day';
+import { PaginationWithoutPaginated } from '../../../hooks/use-pagination';
 import { isWikiOnThisDayType } from '../../../lib/is-wiki-on-this-day-type';
+import { buildInitialPagination } from '../../../lib/build-initial-pagination';
 
 export type State = {
-  pagination: Partial<
-    Record<WikiOnThisDayType, { page: number; size: number; total: number }>
-  >;
+  pagination: Partial<Record<WikiOnThisDayType, PaginationWithoutPaginated>>;
 };
 
 const onThisDaySlice = createSlice({
@@ -17,20 +16,17 @@ const onThisDaySlice = createSlice({
   } satisfies State as State,
   reducers(create) {
     return {
-      paginate: create.preparedReducer(
-        (args: { type: WikiOnThisDayType; page: number; size?: number }) => ({
-          payload: { ...args, size: args.size ?? DEFAULT_PAGE_SIZE },
-        }),
-        (state, action) => {
-          const { type, ...pagination } = action.payload;
+      paginate: create.reducer<
+        { type: WikiOnThisDayType } & Partial<PaginationWithoutPaginated>
+      >((state, action) => {
+        const { type, ...pagination } = action.payload;
 
-          if (!state.pagination[type]) {
-            return;
-          }
+        if (!state.pagination[type]) {
+          return;
+        }
 
-          Object.assign(state.pagination[type], pagination);
-        },
-      ),
+        state.pagination[type] = { ...state.pagination[type], ...pagination };
+      }),
     };
   },
   extraReducers(builder) {
@@ -39,18 +35,14 @@ const onThisDaySlice = createSlice({
       (state, action) => {
         state.pagination = Object.entries(action.payload).reduce<
           State['pagination']
-        >((acc, [type, events]) => {
+        >((pagination, [type, events]) => {
           if (!isWikiOnThisDayType(type)) {
-            return acc;
+            return pagination;
           }
 
-          acc[type] = {
-            page: DEFAULT_PAGE,
-            size: DEFAULT_PAGE_SIZE,
-            total: Math.ceil(events.length / DEFAULT_PAGE_SIZE),
-          };
+          pagination[type] = buildInitialPagination({ count: events.length });
 
-          return acc;
+          return pagination;
         }, {});
       },
     );

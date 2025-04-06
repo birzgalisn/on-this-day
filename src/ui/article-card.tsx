@@ -2,7 +2,7 @@ import {
   ArticleCardContext,
   useArticleCardContext,
 } from './article-card-context';
-import { Paginator, PaginatorProps } from './paginator';
+import { Paginator, PaginatorEntriesProps, PaginatorProps } from './paginator';
 import { EventCard } from './event-card';
 import { WikiOnThisDayType } from '../schema/wiki-on-this-day';
 import { WikiEvent } from '../schema/wiki-event';
@@ -44,29 +44,39 @@ ArticleCard.Title = function ArticleCardTitle({
   );
 };
 
-ArticleCard.Entries = function ArticleCardEntries({
+function ArticleCardPaginator(
+  props: Omit<PaginatorProps<WikiEvent>, 'entries'>,
+) {
+  const { entries } = useArticleCardContext();
+
+  return <Paginator<WikiEvent> entries={entries} {...props} />;
+}
+
+ArticleCardPaginator.Entries = function ArticleCardPaginatorEntries({
   children,
   ...props
 }: {
   children?: ({ event }: { event: WikiEvent }) => React.JSX.Element;
-} & Omit<PaginatorProps<WikiEvent>, 'entries' | 'children'>) {
-  const { entries } = useArticleCardContext();
-
+} & Omit<PaginatorEntriesProps<WikiEvent>, 'children'>) {
   return (
-    <Paginator entries={entries} {...props}>
-      <Paginator.Entries<WikiEvent>>
-        {({ entry: event }) =>
-          children ? (
-            children({ event })
-          ) : (
-            <EventCard event={event}>
-              <EventCard.Title />
-              <EventCard.Entries />
-            </EventCard>
-          )
-        }
-      </Paginator.Entries>
-      <Paginator.Pages />
-    </Paginator>
+    <Paginator.Entries<WikiEvent> {...props}>
+      {({ entry: event }) =>
+        children ? (
+          children({ event })
+        ) : (
+          <EventCard event={event}>
+            <EventCard.Title />
+            <EventCard.Paginator>
+              <EventCard.Paginator.Entries />
+              <EventCard.Paginator.Pages />
+            </EventCard.Paginator>
+          </EventCard>
+        )
+      }
+    </Paginator.Entries>
   );
 };
+
+ArticleCardPaginator.Pages = Paginator.Pages;
+
+ArticleCard.Paginator = ArticleCardPaginator;

@@ -1,14 +1,14 @@
-import { useOnThisDay } from '../hooks/use-on-this-day';
+import { useLazyOnThisDayQuery } from '../hooks/use-lazy-on-this-day-query';
+import { useOnThisDayPagination } from '../hooks/use-on-this-day-pagination';
 import { OnThisDayErrorModal } from './on-this-day-error-modal';
 import { useTrigger } from '../../../hooks/use-trigger';
 import { Button } from '../../../ui/button';
 import { ArticleCard } from '../../../ui/article-card';
 import { ArticleCardSkeleton } from '../../../ui/article-card-skeleton';
 import { Notification } from '../../../ui/notification';
-import { useOnThisDayPage } from '../hooks/use-on-this-day-page';
 
 export function OnThisDayContent() {
-  const [fetchTodaysEvents, result] = useOnThisDay();
+  const [fetchTodaysEvents, result] = useLazyOnThisDayQuery();
 
   const [isErrorVisible, toggleErrorVisibility] = useTrigger(result.isError);
 
@@ -44,7 +44,10 @@ export function OnThisDayContent() {
       {result.entries.map(([type, entries]) => (
         <ArticleCard key={type} {...{ type, entries }}>
           <ArticleCard.Title />
-          <ArticleCard.Entries usePage={useOnThisDayPage} />
+          <ArticleCard.Paginator usePagination={useOnThisDayPagination}>
+            <ArticleCard.Paginator.Entries />
+            <ArticleCard.Paginator.Pages />
+          </ArticleCard.Paginator>
         </ArticleCard>
       ))}
     </section>
