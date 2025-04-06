@@ -1,0 +1,47 @@
+name: ${PROJECT}
+
+networks:
+  proxy:
+
+services:
+  vite: &vite
+    image: ${PROJECT}:vite
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: install
+    command: bun run dev --host
+    env_file: .env
+    volumes:
+      - ./:/app
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.vite.rule=Host(`${CNAME}`)
+      - traefik.http.routers.vite.entrypoints=web
+      - traefik.http.services.vite.loadbalancer.server.port=5173
+    networks:
+      - proxy
+
+  traefik:
+    image: traefik:latest
+    command:
+      - --api.dashboard=true
+      - --entrypoints.web.address=:80
+      - --providers.docker=true
+      - --providers.docker.network=${PROJECT}_proxy
+      - --providers.docker.exposedbydefault=false
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.traefik.rule=Host(`traefik.${CNAME}`)
+      - traefik.http.routers.traefik.entrypoints=web
+      - traefik.http.routers.traefik.service=api@internal
+    networks:
+      proxy:
+        aliases:
+          - ${CNAME}
+    depends_on:
+      - vite
