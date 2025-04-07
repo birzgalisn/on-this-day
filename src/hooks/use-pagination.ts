@@ -1,34 +1,34 @@
 import { useReducer } from 'react';
 
-export type UsePaginationProps = {
+export type PaginationMetadata = {
   page: number;
   size: number;
   surrounding: number;
   total: number;
-  entries: unknown[];
 };
 
-export type Pagination = { paginated: unknown[] } & Pick<
-  UsePaginationProps,
-  'page' | 'size' | 'total' | 'surrounding'
->;
-
-export type PaginationWithoutPaginated = Omit<Pagination, 'paginated'>;
+export type Pagination = { paginated: unknown[] } & PaginationMetadata;
 
 export type UpdatePagination = (
-  newPagination: Partial<PaginationWithoutPaginated>,
+  newPagination: Partial<PaginationMetadata>,
 ) => void;
 
-export type UsePaginationType = Readonly<
+export type UsePaginationReturn = Readonly<
   [pagination: Pagination, updatePagination: UpdatePagination]
 >;
+
+export type UsePaginationProps = { entries: unknown[] } & PaginationMetadata;
+
+export type UsePaginationType = (
+  initialPagination: UsePaginationProps,
+) => UsePaginationReturn;
 
 export function usePagination({
   entries,
   ...initialState
-}: UsePaginationProps): UsePaginationType {
+}: UsePaginationProps): UsePaginationReturn {
   const [pagination, updatePagination] = useReducer(
-    (state, newPagination: Partial<PaginationWithoutPaginated>) => ({
+    (state, newPagination: Partial<PaginationMetadata>) => ({
       ...state,
       ...newPagination,
     }),

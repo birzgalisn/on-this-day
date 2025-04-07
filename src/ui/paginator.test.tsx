@@ -123,7 +123,7 @@ function renderPaginator({
 > = {}) {
   const entries = Array<void>(total * size);
 
-  const usePagination = (): UsePaginationType => [
+  const usePagination: UsePaginationType = () => [
     { page, size, total, surrounding, paginated: [] },
     updatePagination,
   ];

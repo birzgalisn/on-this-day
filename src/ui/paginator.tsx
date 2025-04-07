@@ -3,28 +3,30 @@ import { PaginatorContext, usePaginatorContext } from './paginator-context';
 import { DEFAULT_PAGE } from '../constants/page';
 import { ChevronLeft } from '../icons/chevron-left';
 import { ChevronRight } from '../icons/chevron-right';
-import { usePagination as useDefaultPagination } from '../hooks/use-pagination';
+import { buildInitialPagination } from '../lib/build-initial-pagination';
+import {
+  PaginationMetadata,
+  usePagination as useDefaultPagination,
+  UsePaginationType,
+} from '../hooks/use-pagination';
 import { useVisiblePages } from '../hooks/use-visible-pages';
 import { Button } from './button';
 import './paginator.css';
-import { buildInitialPagination } from '../lib/build-initial-pagination';
 
 export type PaginatorProps<T> = {
   entries: T[];
-  page?: number;
-  size?: number;
-  surrounding?: number;
-  usePagination?: typeof useDefaultPagination;
-} & React.PropsWithChildren;
+  usePagination?: UsePaginationType;
+} & Partial<Pick<PaginationMetadata, 'page' | 'size' | 'surrounding'>> &
+  React.PropsWithChildren;
 
 export function Paginator<T>({
   usePagination = useDefaultPagination,
   entries,
   children,
-  ...override
+  ...paginationOverride
 }: PaginatorProps<T>) {
   const paginator = usePagination({
-    ...buildInitialPagination({ ...override, count: entries.length }),
+    ...buildInitialPagination({ ...paginationOverride, entries }),
     entries,
   });
 

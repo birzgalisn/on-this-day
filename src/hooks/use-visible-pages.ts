@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
-import { PaginationWithoutPaginated } from './use-pagination';
+import { PaginationMetadata } from './use-pagination';
 
 export type UseVisiblePagesProps = Pick<
-  PaginationWithoutPaginated,
+  PaginationMetadata,
   'page' | 'total' | 'surrounding'
 >;
 

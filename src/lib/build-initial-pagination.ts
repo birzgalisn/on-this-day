@@ -1,4 +1,4 @@
-import { PaginationWithoutPaginated } from '../hooks/use-pagination';
+import { PaginationMetadata } from '../hooks/use-pagination';
 import {
   DEFAULT_PAGE,
   DEFAULT_PAGE_SIZE,
@@ -6,11 +6,11 @@ import {
 } from '../constants/page';
 
 export type BuildInitialPaginationProps = {
-  count: number;
-} & Partial<PaginationWithoutPaginated>;
+  entries: unknown[];
+} & Partial<PaginationMetadata>;
 
 export function buildInitialPagination({
-  count,
+  entries,
   page = DEFAULT_PAGE,
   size = DEFAULT_PAGE_SIZE,
   surrounding = DEFAULT_PAGE_SURROUNDING,
@@ -19,6 +19,6 @@ export function buildInitialPagination({
     page,
     size,
     surrounding,
-    total: Math.ceil(count / size),
-  } satisfies PaginationWithoutPaginated;
+    total: Math.ceil(entries.length / size),
+  } satisfies PaginationMetadata;
 }

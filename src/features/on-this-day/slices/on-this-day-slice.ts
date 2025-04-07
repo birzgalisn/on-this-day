@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { onThisDayApi } from '../services/on-this-day-service';
 import { WikiOnThisDayType } from '../../../schema/wiki-on-this-day';
-import { PaginationWithoutPaginated } from '../../../hooks/use-pagination';
+import { PaginationMetadata } from '../../../hooks/use-pagination';
 import { isWikiOnThisDayType } from '../../../lib/is-wiki-on-this-day-type';
 import { buildInitialPagination } from '../../../lib/build-initial-pagination';
 
 export type State = {
-  pagination: Partial<Record<WikiOnThisDayType, PaginationWithoutPaginated>>;
+  pagination: Partial<Record<WikiOnThisDayType, PaginationMetadata>>;
 };
 
 const onThisDaySlice = createSlice({
@@ -17,7 +17,7 @@ const onThisDaySlice = createSlice({
   reducers(create) {
     return {
       paginate: create.reducer<
-        { type: WikiOnThisDayType } & Partial<PaginationWithoutPaginated>
+        { type: WikiOnThisDayType } & Partial<PaginationMetadata>
       >((state, action) => {
         const { type, ...pagination } = action.payload;
 
@@ -40,7 +40,7 @@ const onThisDaySlice = createSlice({
             return pagination;
           }
 
-          pagination[type] = buildInitialPagination({ count: events.length });
+          pagination[type] = buildInitialPagination({ entries: events });
 
           return pagination;
         }, {});

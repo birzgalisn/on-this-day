@@ -2,16 +2,16 @@ import { useOnThisDayDispatch } from './use-on-this-day-dispatch';
 import { useOnThisDaySelector } from './use-on-this-day-selector';
 import { paginate } from '../slices/on-this-day-slice';
 import {
-  PaginationWithoutPaginated,
+  PaginationMetadata,
   UsePaginationProps,
-  UsePaginationType,
+  UsePaginationReturn,
 } from '../../../hooks/use-pagination';
 import { useArticleCardContext } from '../../../ui/article-card-context';
 
 export function useOnThisDayPagination({
   entries,
   ...initialPagination
-}: UsePaginationProps): UsePaginationType {
+}: UsePaginationProps): UsePaginationReturn {
   const dispatch = useOnThisDayDispatch();
 
   const { type } = useArticleCardContext();
@@ -20,9 +20,7 @@ export function useOnThisDayPagination({
     (state) => state.onThisDay.pagination[type] ?? initialPagination,
   );
 
-  const updatePagination = (
-    newPagination: Partial<PaginationWithoutPaginated>,
-  ) => {
+  const updatePagination = (newPagination: Partial<PaginationMetadata>) => {
     dispatch(paginate({ type, ...newPagination }));
   };
 
