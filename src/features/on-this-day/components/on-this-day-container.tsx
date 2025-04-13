@@ -1,3 +1,4 @@
+import { OnThisDayNavigation } from './on-this-day-navigation';
 import './on-this-day-container.css';
 
 export type OnThisDayContainerProps = {} & React.HTMLProps<HTMLDivElement>;
@@ -10,6 +11,8 @@ export function OnThisDayContainer({
   return (
     <div className={`on-this-day ${className}`} {...props}>
       <h1>On this day</h1>
+
+      <OnThisDayNavigation />
 
       {children}
     </div>

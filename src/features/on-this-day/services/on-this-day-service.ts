@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { format } from 'date-fns';
 import { baseQueryWithValidation } from '../../../lib/base-query-with-validation';
-import { getPaddedDate } from '../../../lib/get-padded-date';
+import { getLeapYearIsoDate } from '../../../lib/get-leap-year-iso-date';
 import {
   WikiOnThisDay,
   wikiOnThisDaySchema,
@@ -14,10 +15,9 @@ export const onThisDayApi = createApi({
     }),
   ),
   endpoints: (builder) => ({
-    getEvents: builder.query<WikiOnThisDay, void>({
-      query() {
-        const [month, day] = getPaddedDate();
-        return `births/${month}/${day}`;
+    getEvents: builder.query<WikiOnThisDay, { isoDate?: string } | void>({
+      query({ isoDate = getLeapYearIsoDate() } = {}) {
+        return `births/${format(isoDate, 'MM/dd')}`;
       },
       extraOptions: {
         dataSchema: wikiOnThisDaySchema,
@@ -26,4 +26,4 @@ export const onThisDayApi = createApi({
   }),
 });
 
-export const { useLazyGetEventsQuery } = onThisDayApi;
+export const { useGetEventsQuery } = onThisDayApi;

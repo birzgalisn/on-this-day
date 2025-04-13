@@ -1,14 +1,13 @@
-import { useLazyOnThisDayQuery } from '../hooks/use-lazy-on-this-day-query';
+import { useOnThisDayQuery } from '../hooks/use-on-this-day-query';
 import { useOnThisDayPagination } from '../hooks/use-on-this-day-pagination';
 import { OnThisDayErrorModal } from './on-this-day-error-modal';
 import { useTrigger } from '../../../hooks/use-trigger';
-import { Button } from '../../../ui/button';
 import { ArticleCard } from '../../../ui/article-card';
 import { ArticleCardSkeleton } from '../../../ui/article-card-skeleton';
 import { Notification } from '../../../ui/notification';
 
 export function OnThisDayContent() {
-  const [fetchTodaysEvents, result] = useLazyOnThisDayQuery();
+  const result = useOnThisDayQuery();
 
   const [isErrorVisible, toggleErrorVisibility] = useTrigger(result.isError);
 
@@ -16,16 +15,11 @@ export function OnThisDayContent() {
     return (
       <OnThisDayErrorModal
         error={result.error}
-        onClick={() => toggleErrorVisibility(false)}
+        onClick={() => {
+          toggleErrorVisibility(false);
+          void result.refetch();
+        }}
       />
-    );
-  }
-
-  if (result.isQueryable) {
-    return (
-      <Button disabled={result.isFetching} onClick={() => fetchTodaysEvents()}>
-        What happened on this day?
-      </Button>
     );
   }
 
@@ -39,17 +33,21 @@ export function OnThisDayContent() {
     );
   }
 
-  return (
-    <section className={`full-width ${result.isFetching ? 'pulse' : ''}`}>
-      {result.entries.map(([type, entries]) => (
-        <ArticleCard key={type} {...{ type, entries }}>
-          <ArticleCard.Title />
-          <ArticleCard.Paginator usePagination={useOnThisDayPagination}>
-            <ArticleCard.Paginator.Entries />
-            <ArticleCard.Paginator.Pages />
-          </ArticleCard.Paginator>
-        </ArticleCard>
-      ))}
-    </section>
-  );
+  if (result.isRenderable) {
+    return (
+      <section className={`full-width ${result.isFetching ? 'pulse' : ''}`}>
+        {result.entries.map(([type, entries]) => (
+          <ArticleCard key={type} {...{ type, entries }}>
+            <ArticleCard.Title />
+            <ArticleCard.Paginator usePagination={useOnThisDayPagination}>
+              <ArticleCard.Paginator.Entries />
+              <ArticleCard.Paginator.Pages />
+            </ArticleCard.Paginator>
+          </ArticleCard>
+        ))}
+      </section>
+    );
+  }
+
+  return null;
 }

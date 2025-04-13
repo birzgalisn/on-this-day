@@ -1,13 +1,13 @@
-import { act } from '@testing-library/react';
 import { onThisDayServer } from '../__tests__/on-this-day-node';
 import { renderHookWithProviders } from '../__tests__/on-this-day-utils';
 import {
   DEFAULT_PAGE_SIZE,
   DEFAULT_PAGE_SURROUNDING,
 } from '../../../constants/page';
-import { useLazyGetEventsQuery } from '../services/on-this-day-service';
+import { useGetEventsQuery } from '../services/on-this-day-service';
 import { RootOnThisDayState } from '../store/on-this-day-store';
 import onThisDayReducer, { paginate } from './on-this-day-slice';
+import { waitFor } from '@testing-library/react';
 
 const BIRTHS = {
   page: 1,
@@ -48,11 +48,9 @@ describe('onThisDaySlice', () => {
   });
 
   it('should initialize pagination after fetching events', async () => {
-    const { result, store } = renderHookWithProviders(useLazyGetEventsQuery);
+    const { store, result } = renderHookWithProviders(useGetEventsQuery);
 
-    const [triggerFetch] = result.current;
-
-    await act(triggerFetch);
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
 
     const { pagination } = store.getState().onThisDay;
 

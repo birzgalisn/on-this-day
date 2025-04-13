@@ -2,16 +2,18 @@ import { createSlice } from '@reduxjs/toolkit';
 import { onThisDayApi } from '../services/on-this-day-service';
 import { WikiOnThisDayType } from '../../../schema/wiki-on-this-day';
 import { PaginationMetadata } from '../../../hooks/use-pagination';
-import { isWikiOnThisDayType } from '../../../lib/is-wiki-on-this-day-type';
 import { buildInitialPagination } from '../../../lib/build-initial-pagination';
+import { getWikiOnThisDayEntries } from '../../../lib/get-wiki-on-this-day-entries';
 
 export type State = {
+  isoDate?: string;
   pagination: Partial<Record<WikiOnThisDayType, PaginationMetadata>>;
 };
 
 const onThisDaySlice = createSlice({
   name: 'onThisDay',
   initialState: {
+    isoDate: undefined,
     pagination: {},
   } satisfies State as State,
   reducers(create) {
@@ -21,11 +23,12 @@ const onThisDaySlice = createSlice({
       >((state, action) => {
         const { type, ...pagination } = action.payload;
 
-        if (!state.pagination[type]) {
-          return;
+        if (state.pagination[type]) {
+          state.pagination[type] = { ...state.pagination[type], ...pagination };
         }
-
-        state.pagination[type] = { ...state.pagination[type], ...pagination };
+      }),
+      setIsoDate: create.reducer<{ isoDate: string }>((state, action) => {
+        state.isoDate = action.payload.isoDate;
       }),
     };
   },
@@ -33,23 +36,21 @@ const onThisDaySlice = createSlice({
     builder.addMatcher(
       onThisDayApi.endpoints.getEvents.matchFulfilled,
       (state, action) => {
-        state.pagination = Object.entries(action.payload).reduce<
+        state.pagination = getWikiOnThisDayEntries(action.payload).reduce<
           State['pagination']
-        >((pagination, [type, events]) => {
-          if (!isWikiOnThisDayType(type)) {
-            return pagination;
-          }
-
-          pagination[type] = buildInitialPagination({ entries: events });
-
-          return pagination;
-        }, {});
+        >(
+          (pagination, [type, events]) => ({
+            ...pagination,
+            [type]: buildInitialPagination({ entries: events }),
+          }),
+          {},
+        );
       },
     );
   },
 });
 
-export const { paginate } = onThisDaySlice.actions;
+export const { paginate, setIsoDate } = onThisDaySlice.actions;
 
 const onThisDayReducer = onThisDaySlice.reducer;
 
