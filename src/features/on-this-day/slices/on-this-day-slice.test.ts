@@ -1,23 +1,26 @@
+import { waitFor } from '@testing-library/react';
 import { onThisDayServer } from '../__tests__/on-this-day-node';
 import { renderHookWithProviders } from '../__tests__/on-this-day-utils';
+import { DEFAULT_ON_THIS_DAY_PAGE_SIZE } from '../constants/page';
+import { useGetEventsQuery } from '../services/on-this-day-service';
+import { RootOnThisDayState } from '../store/on-this-day-store';
+import { onThisDayReducer, paginate } from './on-this-day-slice';
+import { PaginationMetadata } from '../../../hooks/use-pagination';
 import {
+  DEFAULT_PAGE,
   DEFAULT_PAGE_SIZE,
   DEFAULT_PAGE_SURROUNDING,
 } from '../../../constants/page';
-import { useGetEventsQuery } from '../services/on-this-day-service';
-import { RootOnThisDayState } from '../store/on-this-day-store';
-import onThisDayReducer, { paginate } from './on-this-day-slice';
-import { waitFor } from '@testing-library/react';
 
-const BIRTHS = {
-  page: 1,
-  total: 100,
+const PAGINATION = {
+  page: DEFAULT_PAGE,
   size: DEFAULT_PAGE_SIZE,
   surrounding: DEFAULT_PAGE_SURROUNDING,
-} satisfies RootOnThisDayState['onThisDay']['pagination']['births'];
+  total: 3,
+} satisfies PaginationMetadata;
 
 const STATE = {
-  pagination: { births: BIRTHS },
+  pagination: { births: PAGINATION },
 } satisfies RootOnThisDayState['onThisDay'];
 
 describe('onThisDaySlice', () => {
@@ -41,7 +44,7 @@ describe('onThisDaySlice', () => {
     const action = paginate({ type: 'births', page: 2 });
 
     const expected = {
-      pagination: { births: { ...BIRTHS, page: action.payload.page } },
+      pagination: { births: { ...PAGINATION, page: action.payload.page } },
     } as const;
 
     expect(onThisDayReducer(STATE, action)).toEqual(expected);
@@ -55,7 +58,11 @@ describe('onThisDaySlice', () => {
     const { pagination } = store.getState().onThisDay;
 
     const expected = {
-      births: { ...BIRTHS, page: 1, size: 2, total: 3 },
+      births: { ...PAGINATION, size: DEFAULT_ON_THIS_DAY_PAGE_SIZE },
+      selected: { ...PAGINATION, size: DEFAULT_ON_THIS_DAY_PAGE_SIZE },
+      deaths: { ...PAGINATION, size: DEFAULT_ON_THIS_DAY_PAGE_SIZE },
+      events: { ...PAGINATION, size: DEFAULT_ON_THIS_DAY_PAGE_SIZE },
+      holidays: { ...PAGINATION, size: DEFAULT_ON_THIS_DAY_PAGE_SIZE },
     } as const;
 
     expect(pagination).toEqual(expected);

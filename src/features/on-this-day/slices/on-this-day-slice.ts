@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { DEFAULT_ON_THIS_DAY_PAGE_SIZE } from '../constants/page';
 import { onThisDayApi } from '../services/on-this-day-service';
 import { WikiOnThisDayType } from '../../../schema/wiki-on-this-day';
 import { PaginationMetadata } from '../../../hooks/use-pagination';
 import { buildInitialPagination } from '../../../lib/build-initial-pagination';
 import { getWikiOnThisDayEntries } from '../../../lib/get-wiki-on-this-day-entries';
 
-export type State = {
+export type OnThisDayState = {
   isoDate?: string;
   pagination: Partial<Record<WikiOnThisDayType, PaginationMetadata>>;
 };
@@ -15,7 +16,7 @@ const onThisDaySlice = createSlice({
   initialState: {
     isoDate: undefined,
     pagination: {},
-  } satisfies State as State,
+  } satisfies OnThisDayState as OnThisDayState,
   reducers(create) {
     return {
       paginate: create.reducer<
@@ -37,11 +38,14 @@ const onThisDaySlice = createSlice({
       onThisDayApi.endpoints.getEvents.matchFulfilled,
       (state, action) => {
         state.pagination = getWikiOnThisDayEntries(action.payload).reduce<
-          State['pagination']
+          OnThisDayState['pagination']
         >(
           (pagination, [type, events]) => ({
             ...pagination,
-            [type]: buildInitialPagination({ entries: events }),
+            [type]: buildInitialPagination({
+              size: DEFAULT_ON_THIS_DAY_PAGE_SIZE,
+              entries: events,
+            }),
           }),
           {},
         );
@@ -52,6 +56,4 @@ const onThisDaySlice = createSlice({
 
 export const { paginate, setIsoDate } = onThisDaySlice.actions;
 
-const onThisDayReducer = onThisDaySlice.reducer;
-
-export default onThisDayReducer;
+export const onThisDayReducer = onThisDaySlice.reducer;

@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { onThisDayApi } from '../services/on-this-day-service';
-import onThisDayReducer from '../slices/on-this-day-slice';
+import { onThisDayReducer } from '../slices/on-this-day-slice';
 
 const rootReducer = combineReducers({
   [onThisDayApi.reducerPath]: onThisDayApi.reducer,

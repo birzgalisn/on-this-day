@@ -2,6 +2,7 @@ import { useOnThisDayNavigation } from '../hooks/use-on-this-day-navigation';
 import { getLeapYearIsoDate } from '../../../lib/get-leap-year-iso-date';
 import { DatePicker } from '../../../ui/date-picker';
 import { Button } from '../../../ui/button';
+import './on-this-day-navigation.css';
 
 export function OnThisDayNavigation() {
   const [{ disabled, isoDate }, handleIsoDateChange] = useOnThisDayNavigation();
@@ -15,6 +16,10 @@ export function OnThisDayNavigation() {
   }
 
   return (
-    <DatePicker {...{ disabled, isoDate }} onClick={handleIsoDateChange} />
+    <DatePicker
+      {...{ disabled, isoDate }}
+      onClick={handleIsoDateChange}
+      className="navigation"
+    />
   );
 }

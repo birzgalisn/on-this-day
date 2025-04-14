@@ -17,7 +17,7 @@ export const onThisDayApi = createApi({
   endpoints: (builder) => ({
     getEvents: builder.query<WikiOnThisDay, { isoDate?: string } | void>({
       query({ isoDate = getLeapYearIsoDate() } = {}) {
-        return `births/${format(isoDate, 'MM/dd')}`;
+        return `all/${format(isoDate, 'MM/dd')}`;
       },
       extraOptions: {
         dataSchema: wikiOnThisDaySchema,

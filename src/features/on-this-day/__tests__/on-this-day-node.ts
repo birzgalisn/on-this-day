@@ -1,15 +1,15 @@
 import { delay, http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import { WikiOnThisDayType } from '../../../schema/wiki-on-this-day';
-import { births } from './on-this-day.json';
+import data from '../__mocks__/on-this-day.json';
 
 const path =
-  'https://en.wikipedia.org/api/rest_v1/feed/onthisday/births/:month/:day';
+  'https://en.wikipedia.org/api/rest_v1/feed/onthisday/:type/:month/:day';
 
 const handlers = Object.freeze([
   http.get(path, async () => {
     await delay(100);
-    return HttpResponse.json({ births });
+    return HttpResponse.json(data);
   }),
 ]);
 

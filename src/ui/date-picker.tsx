@@ -28,13 +28,13 @@ function DatePicker({
 
   return (
     <div className={`container row ${className}`} {...props}>
-      <Button disabled={disabled} onClick={handleDateChange('prev')}>
+      <Button size="sm" disabled={disabled} onClick={handleDateChange('prev')}>
         <ChevronLeft />
       </Button>
 
       <p>{formatDate(isoDate, 'MMMM do')}</p>
 
-      <Button disabled={disabled} onClick={handleDateChange('next')}>
+      <Button size="sm" disabled={disabled} onClick={handleDateChange('next')}>
         <ChevronRight />
       </Button>
     </div>

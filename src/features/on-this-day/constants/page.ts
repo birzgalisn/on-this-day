@@ -1,0 +1,1 @@
+export const DEFAULT_ON_THIS_DAY_PAGE_SIZE = 2;
