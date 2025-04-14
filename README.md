@@ -1,6 +1,6 @@
 # On this day
 
-Fetches notable people born on the given date from Wikipedia "On this day" API.
+Fetches notable events for the given date from Wikipedia "On this day" API.
 
 ## Requirements
 
