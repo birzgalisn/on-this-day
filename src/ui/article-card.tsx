@@ -26,10 +26,15 @@ export function ArticleCard({
   );
 }
 
+type ArticleCardTitle = {} & Omit<
+  React.HTMLProps<HTMLHeadingElement>,
+  'children'
+>;
+
 ArticleCard.Title = function ArticleCardTitle({
   className = '',
   ...props
-}: Omit<React.HTMLProps<HTMLHeadingElement>, 'children'>) {
+}: ArticleCardTitle) {
   const { type } = useArticleCardContext();
   const title = WIKI_ON_THIS_DAY_TYPE_MAP[type];
 
@@ -44,20 +49,25 @@ ArticleCard.Title = function ArticleCardTitle({
   );
 };
 
-function ArticleCardPaginator(
-  props: Omit<PaginatorProps<WikiEvent>, 'entries'>,
-) {
+export type ArticleCardPaginatorProps = {} & Omit<
+  PaginatorProps<WikiEvent>,
+  'entries'
+>;
+
+function ArticleCardPaginator(props: ArticleCardPaginatorProps) {
   const { entries } = useArticleCardContext();
 
   return <Paginator<WikiEvent> entries={entries} {...props} />;
 }
 
+export type ArticleCardPaginatorEntriesProps = {
+  children?: ({ event }: { event: WikiEvent }) => React.JSX.Element;
+} & Omit<PaginatorEntriesProps<WikiEvent>, 'children'>;
+
 ArticleCardPaginator.Entries = function ArticleCardPaginatorEntries({
   children,
   ...props
-}: {
-  children?: ({ event }: { event: WikiEvent }) => React.JSX.Element;
-} & Omit<PaginatorEntriesProps<WikiEvent>, 'children'>) {
+}: ArticleCardPaginatorEntriesProps) {
   return (
     <Paginator.Entries<WikiEvent> {...props}>
       {({ entry: event }) =>

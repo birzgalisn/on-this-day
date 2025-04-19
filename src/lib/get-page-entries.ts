@@ -8,7 +8,7 @@ export function getPageEntries<T>({
   size: number;
 }) {
   const startIndex = (page - 1) * size;
-  const endIndex = page + size;
+  const endIndex = startIndex + size;
 
   return entries.slice(startIndex, endIndex);
 }

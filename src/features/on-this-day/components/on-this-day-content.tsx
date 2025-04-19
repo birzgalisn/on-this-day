@@ -1,8 +1,7 @@
-import { useOnThisDayQuery } from '../hooks/use-on-this-day-query';
-import { useOnThisDayPagination } from '../hooks/use-on-this-day-pagination';
+import { OnThisDayArticleCard } from './on-this-day-article-card';
 import { OnThisDayErrorModal } from './on-this-day-error-modal';
+import { useOnThisDayQuery } from '../hooks/use-on-this-day-query';
 import { useTrigger } from '../../../hooks/use-trigger';
-import { ArticleCard } from '../../../ui/article-card';
 import { ArticleCardSkeleton } from '../../../ui/article-card-skeleton';
 import { Notification } from '../../../ui/notification';
 
@@ -37,13 +36,13 @@ export function OnThisDayContent() {
     return (
       <section className={`full-width ${result.isFetching ? 'pulse' : ''}`}>
         {result.entries.map(([type, entries]) => (
-          <ArticleCard key={type} {...{ type, entries }}>
-            <ArticleCard.Title />
-            <ArticleCard.Paginator usePagination={useOnThisDayPagination}>
-              <ArticleCard.Paginator.Entries />
-              <ArticleCard.Paginator.Pages />
-            </ArticleCard.Paginator>
-          </ArticleCard>
+          <OnThisDayArticleCard key={type} {...{ type, entries }}>
+            <OnThisDayArticleCard.Title />
+            <OnThisDayArticleCard.Paginator>
+              <OnThisDayArticleCard.Paginator.Entries />
+              <OnThisDayArticleCard.Paginator.Pages />
+            </OnThisDayArticleCard.Paginator>
+          </OnThisDayArticleCard>
         ))}
       </section>
     );

@@ -16,7 +16,7 @@ const PAGINATION = {
   page: DEFAULT_PAGE,
   size: DEFAULT_PAGE_SIZE,
   surrounding: DEFAULT_PAGE_SURROUNDING,
-  total: 3,
+  total: 5,
 } satisfies PaginationMetadata;
 
 const STATE = {

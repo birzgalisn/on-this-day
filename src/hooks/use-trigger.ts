@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-export function useTrigger(trigger?: boolean) {
-  const [state, setState] = useState<boolean>();
+export function useTrigger(trigger = false) {
+  const [state, setState] = useState<boolean>(() => trigger);
 
   const toggle = (isTruthy?: boolean) => setState((prev) => isTruthy ?? !prev);
 

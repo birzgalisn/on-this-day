@@ -20,10 +20,15 @@ export function PageCard({
   );
 }
 
+type PageCardThumbnailProps = {} & Omit<
+  React.HTMLProps<HTMLImageElement>,
+  'children'
+>;
+
 PageCard.Thumbnail = function PageCardThumbnail({
   className = '',
   ...props
-}: Omit<React.HTMLProps<HTMLImageElement>, 'children'>) {
+}: PageCardThumbnailProps) {
   const { page } = usePageCardContext();
 
   return (
@@ -36,17 +41,24 @@ PageCard.Thumbnail = function PageCardThumbnail({
   );
 };
 
+type PageCardContentProps = {} & React.HTMLProps<HTMLDivElement>;
+
 PageCard.Content = function PageCardContent({
   className = '',
   ...props
-}: React.HTMLProps<HTMLDivElement>) {
+}: PageCardContentProps) {
   return <div className={`list column ${className}`} {...props} />;
 };
+
+type PageCardTitleProps = {} & Omit<
+  React.HTMLProps<HTMLHeadingElement>,
+  'children'
+>;
 
 PageCard.Title = function PageCardTitle({
   className = '',
   ...props
-}: Omit<React.HTMLProps<HTMLHeadingElement>, 'children'>) {
+}: PageCardTitleProps) {
   const { page } = usePageCardContext();
 
   return (
@@ -60,10 +72,15 @@ PageCard.Title = function PageCardTitle({
   );
 };
 
+type PageCardDescriptionProps = {} & Omit<
+  React.HTMLProps<HTMLParagraphElement>,
+  'children'
+>;
+
 PageCard.Description = function PageCardDescription({
   className = '',
   ...props
-}: Omit<React.HTMLProps<HTMLParagraphElement>, 'children'>) {
+}: PageCardDescriptionProps) {
   const { page } = usePageCardContext();
 
   return (

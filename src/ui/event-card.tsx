@@ -23,10 +23,15 @@ export function EventCard({
   );
 }
 
+type EventCardTitleProps = {} & Omit<
+  React.HTMLProps<HTMLHeadingElement>,
+  'children'
+>;
+
 EventCard.Title = function EventCardTitle({
   className = '',
   ...props
-}: Omit<React.HTMLProps<HTMLHeadingElement>, 'children'>) {
+}: EventCardTitleProps) {
   const { event } = useEventCardContext();
 
   return (
@@ -40,18 +45,22 @@ EventCard.Title = function EventCardTitle({
   );
 };
 
-function EventCardPaginator(props: Omit<PaginatorProps<WikiPage>, 'entries'>) {
+type EventCardPaginatorProps = {} & Omit<PaginatorProps<WikiPage>, 'entries'>;
+
+function EventCardPaginator(props: EventCardPaginatorProps) {
   const { event } = useEventCardContext();
 
   return <Paginator<WikiPage> entries={event.pages} {...props} />;
 }
 
+type EventCardPaginatorEntriesProps = {
+  children?: ({ page }: { page: WikiPage }) => React.JSX.Element;
+} & Omit<PaginatorEntriesProps<WikiPage>, 'children'>;
+
 EventCardPaginator.Entries = function EventCardPaginatorEntries({
   children,
   ...props
-}: {
-  children?: ({ page }: { page: WikiPage }) => React.JSX.Element;
-} & Omit<PaginatorEntriesProps<WikiPage>, 'children'>) {
+}: EventCardPaginatorEntriesProps) {
   return (
     <Paginator.Entries<WikiPage> {...props}>
       {({ entry: page }) =>

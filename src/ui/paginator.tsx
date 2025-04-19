@@ -4,34 +4,29 @@ import { DEFAULT_PAGE } from '../constants/page';
 import { ChevronLeft } from '../icons/chevron-left';
 import { ChevronRight } from '../icons/chevron-right';
 import { buildInitialPagination } from '../lib/build-initial-pagination';
-import {
-  PaginationMetadata,
-  usePagination as useDefaultPagination,
-  UsePaginationType,
-} from '../hooks/use-pagination';
+import { PaginationMetadata, usePagination } from '../hooks/use-pagination';
 import { useVisiblePages } from '../hooks/use-visible-pages';
 import { Button } from './button';
 import './paginator.css';
 
 export type PaginatorProps<T> = {
   entries: T[];
-  usePagination?: UsePaginationType;
 } & Partial<Pick<PaginationMetadata, 'page' | 'size' | 'surrounding'>> &
   React.PropsWithChildren;
 
+// https://careers.wolt.com/en/blog/engineering/injecting-hooks-into-react-components
 export function Paginator<T>({
-  usePagination = useDefaultPagination,
   entries,
   children,
   ...paginationOverride
 }: PaginatorProps<T>) {
-  const paginator = usePagination({
-    ...buildInitialPagination({ ...paginationOverride, entries }),
+  const pagination = usePagination({
+    ...buildInitialPagination({ entries, ...paginationOverride }),
     entries,
   });
 
   return (
-    <PaginatorContext.Provider value={paginator}>
+    <PaginatorContext.Provider value={pagination}>
       {children}
     </PaginatorContext.Provider>
   );
