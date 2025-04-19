@@ -1,5 +1,4 @@
-import { isZodError } from '../../../lib/is-zod-error';
-import { ON_THIS_DAY_ZOD_ERROR_MAP } from '../constants/on-this-day-zod-error-map';
+import { getReadableOnThisDayError } from '../lib/get-readable-on-this-day-error';
 import { Modal, ModalProps } from '../../../ui/modal';
 
 export type OnThisDayErrorModalProps = {
@@ -12,7 +11,7 @@ export function OnThisDayErrorModal({
 }: OnThisDayErrorModalProps) {
   return (
     <Modal title="Error" onClick={onClick}>
-      <p>{ON_THIS_DAY_ZOD_ERROR_MAP[`${isZodError(error)}`]}</p>
+      <p>{getReadableOnThisDayError(error)}</p>
     </Modal>
   );
 }

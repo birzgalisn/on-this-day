@@ -1,12 +1,13 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { ZodError } from 'zod';
 import {
   mockOnThisDayResponse,
   mockOnThisDayServerError,
   onThisDayServer,
 } from './__tests__/on-this-day-node';
 import { renderWithProviders } from './__tests__/on-this-day-utils';
-import { ON_THIS_DAY_ZOD_ERROR_MAP } from './constants/on-this-day-zod-error-map';
+import { getReadableOnThisDayError } from './lib/get-readable-on-this-day-error';
 import { WIKI_ON_THIS_DAY_TYPE_MAP } from '../../constants/wiki-on-this-day-type-map';
 import { OnThisDay } from './on-this-day';
 
@@ -35,28 +36,40 @@ describe('OnThisDay', () => {
     });
   });
 
-  it('shows network error message', async () => {
+  it('shows user readable network error message', async () => {
     mockOnThisDayServerError();
 
     const result = renderOnThisDay();
 
     await userEvent.click(result.fetchEventsButton);
 
-    expect(
-      await screen.findByText(ON_THIS_DAY_ZOD_ERROR_MAP.false),
-    ).toBeInTheDocument();
+    expect(await result.networkErrorMessage).toBeVisible();
   });
 
-  it('shows zod validation error message', async () => {
-    mockOnThisDayResponse();
+  describe('when zod validation fails', () => {
+    const consoleMock = vi.spyOn(console, 'error').mockImplementation(vi.fn());
 
-    const result = renderOnThisDay();
+    let result: ReturnType<typeof renderOnThisDay>;
 
-    await userEvent.click(result.fetchEventsButton);
+    beforeEach(async () => {
+      mockOnThisDayResponse();
 
-    expect(
-      await screen.findByText(ON_THIS_DAY_ZOD_ERROR_MAP.true),
-    ).toBeInTheDocument();
+      result = renderOnThisDay();
+
+      await userEvent.click(result.fetchEventsButton);
+    });
+
+    afterAll(() => {
+      consoleMock.mockRestore();
+    });
+
+    it('shows user readable error message', async () => {
+      expect(await result.zodErrorMessage).toBeVisible();
+    });
+
+    it('logs error within console', () => {
+      expect(consoleMock).toHaveBeenCalledOnce();
+    });
   });
 });
 
@@ -70,6 +83,12 @@ function renderOnThisDay() {
     },
     get skeletonLoader() {
       return screen.getByLabelText(new RegExp('Loading events', 'i'));
+    },
+    get zodErrorMessage() {
+      return screen.findByText(getReadableOnThisDayError(new ZodError([])));
+    },
+    get networkErrorMessage() {
+      return screen.findByText(getReadableOnThisDayError(new Error()));
     },
   } as const;
 }
