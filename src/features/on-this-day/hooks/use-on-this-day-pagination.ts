@@ -7,6 +7,7 @@ import {
   UsePaginationReturn,
 } from '../../../hooks/use-pagination';
 import { useArticleCardContext } from '../../../ui/article-card-context';
+import { getPageEntries } from '../../../lib/get-page-entries';
 
 export function useOnThisDayPagination({
   entries,
@@ -24,8 +25,7 @@ export function useOnThisDayPagination({
     dispatch(paginate({ type, ...newPagination }));
   };
 
-  const start = (pagination.page - 1) * pagination.size;
-  const paginated = entries.slice(start, start + pagination.size);
+  const paginated = getPageEntries({ entries, ...pagination });
 
   return [{ ...pagination, paginated }, updatePagination] as const;
 }

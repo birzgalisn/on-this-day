@@ -1,4 +1,5 @@
 import { useReducer } from 'react';
+import { getPageEntries } from '../lib/get-page-entries';
 
 export type PaginationMetadata = {
   page: number;
@@ -35,8 +36,7 @@ export function usePagination({
     initialState,
   );
 
-  const start = (pagination.page - 1) * pagination.size;
-  const paginated = entries.slice(start, start + pagination.size);
+  const paginated = getPageEntries({ entries, ...pagination });
 
   return [{ ...pagination, paginated }, updatePagination] as const;
 }
