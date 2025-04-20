@@ -7,7 +7,7 @@ import stylex from '@stylexjs/eslint-plugin';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist', 'dist-ssr', 'coverage'] },
+  { ignores: ['coverage', 'dist', 'dist-ssr'] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],

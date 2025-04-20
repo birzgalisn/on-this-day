@@ -1,3 +1,2 @@
-dist
-dist-ssr
 coverage
+dist*
