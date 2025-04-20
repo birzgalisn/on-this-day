@@ -14,7 +14,6 @@ export type PaginatorProps<T> = {
 } & Partial<Pick<PaginationMetadata, 'page' | 'size' | 'surrounding'>> &
   React.PropsWithChildren;
 
-// https://careers.wolt.com/en/blog/engineering/injecting-hooks-into-react-components
 export function Paginator<T>({
   entries,
   children,
@@ -31,6 +30,28 @@ export function Paginator<T>({
     </PaginatorContext.Provider>
   );
 }
+
+/**
+ * https://careers.wolt.com/en/blog/engineering/injecting-hooks-into-react-components
+ *
+ * export function Paginator<T>({
+ *   usePagination = useDefaultPagination, \/* eslint-disable-next-line react-compiler/react-compiler *\/
+ *   entries,
+ *   children,
+ *   ...paginationOverride
+ * }: PaginatorProps<T>) {
+ *   const paginator = usePagination({ \/* eslint-disable-next-line react-compiler/react-compiler *\/
+ *     ...buildInitialPagination({ ...paginationOverride, entries }),
+ *     entries,
+ *   });
+ *
+ *   return (
+ *     <PaginatorContext.Provider value={paginator}>
+ *       {children}
+ *     </PaginatorContext.Provider>
+ *   );
+ * }
+ */
 
 export type PaginatorEntriesProps<T> = {
   children: ({ entry }: { entry: T }) => React.JSX.Element;
