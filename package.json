@@ -14,7 +14,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "format": "prettier --write --ignore-unknown ."
+    "format": "prettier --write --ignore-unknown .",
+    "check": "prettier --check ."
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.7.0",
