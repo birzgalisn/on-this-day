@@ -4,7 +4,7 @@ Fetches notable events for the given date from Wikipedia "On this day" API.
 
 ## Requirements
 
-[node](https://nodejs.org/en) (22.14.0 and later) and [npm](https://www.npmjs.com) (10.9.2 and later) is recommended to be used to install all necessary packages.
+[Node](https://nodejs.org/en) (22.14.0 and later) and [npm](https://www.npmjs.com) (10.9.2 and later) is recommended to be used to install all necessary packages.
 
 ## Steps
 
@@ -22,6 +22,10 @@ Use `npm` to invoke commands.
 
 - `npm run build` - generates production build
 
+- `npm run lint` - finds possible issues
+
 - `npm run preview` - starts production preview server
 
 - `npm run format` - formats files
+
+- `npm run check` - checks formatting
