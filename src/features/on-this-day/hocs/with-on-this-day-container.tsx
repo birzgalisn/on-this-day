@@ -1,7 +1,7 @@
 import {
   OnThisDayContainer,
   OnThisDayContainerProps,
-} from '../components/on-this-day-container';
+} from '~/features/on-this-day/components/on-this-day-container';
 
 export function withOnThisDayContainer<
   Props extends React.JSX.IntrinsicAttributes,

@@ -1,9 +1,9 @@
-import { PaginationMetadata } from '../hooks/use-pagination';
+import { PaginationMetadata } from '~/hooks/use-pagination';
 import {
   DEFAULT_PAGE,
   DEFAULT_PAGE_SIZE,
   DEFAULT_PAGE_SURROUNDING,
-} from '../constants/page';
+} from '~/constants/page';
 
 export type BuildInitialPaginationProps = {
   entries: unknown[];

@@ -1,11 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { format } from 'date-fns';
-import { baseQueryWithValidation } from '../../../lib/base-query-with-validation';
-import { getLeapYearIsoDate } from '../../../lib/get-leap-year-iso-date';
-import {
-  WikiOnThisDay,
-  wikiOnThisDaySchema,
-} from '../../../schema/wiki-on-this-day';
+import { baseQueryWithValidation } from '~/lib/base-query-with-validation';
+import { getLeapYearIsoDate } from '~/lib/get-leap-year-iso-date';
+import { WikiOnThisDay, wikiOnThisDaySchema } from '~/schema/wiki-on-this-day';
 
 export const onThisDayApi = createApi({
   reducerPath: 'onThisDayApi',

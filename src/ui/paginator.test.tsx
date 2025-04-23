@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { Paginator, PaginatorProps } from './paginator';
+import { Paginator, PaginatorProps } from '~/ui/paginator';
 
 describe('Paginator', () => {
   it('is visible', () => {

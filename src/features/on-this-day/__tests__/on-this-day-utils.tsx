@@ -5,7 +5,7 @@ import {
   setupOnThisDayStore,
   OnThisDayStore,
   RootOnThisDayState,
-} from '../store/on-this-day-store';
+} from '~/features/on-this-day/store/on-this-day-store';
 
 type ExtendedRenderOptions = {
   preloadedState?: Partial<RootOnThisDayState>;

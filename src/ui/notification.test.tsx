@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Notification, NotificationProps } from './notification';
+import { Notification, NotificationProps } from '~/ui/notification';
 
 describe.each<NotificationProps['type']>(['info', 'success', 'error'])(
   "Notification of type '%s'",

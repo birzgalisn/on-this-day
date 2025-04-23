@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { UsePaginationReturn } from '../hooks/use-pagination';
+import { UsePaginationReturn } from '~/hooks/use-pagination';
 
 export const PaginatorContext = createContext<UsePaginationReturn | null>(null);
 

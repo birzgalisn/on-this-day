@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { PaginationMetadata } from './use-pagination';
+import { PaginationMetadata } from '~/hooks/use-pagination';
 
 export type UseVisiblePagesProps = Pick<
   PaginationMetadata,

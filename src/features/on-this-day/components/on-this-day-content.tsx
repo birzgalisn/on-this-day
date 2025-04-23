@@ -1,9 +1,9 @@
-import { OnThisDayArticleCard } from './on-this-day-article-card';
-import { OnThisDayErrorModal } from './on-this-day-error-modal';
-import { useOnThisDayQuery } from '../hooks/use-on-this-day-query';
-import { useTrigger } from '../../../hooks/use-trigger';
-import { ArticleCardSkeleton } from '../../../ui/article-card-skeleton';
-import { Notification } from '../../../ui/notification';
+import { useOnThisDayQuery } from '~/features/on-this-day/hooks/use-on-this-day-query';
+import { OnThisDayErrorModal } from '~/features/on-this-day/components/on-this-day-error-modal';
+import { OnThisDayArticleCard } from '~/features/on-this-day/components/on-this-day-article-card';
+import { useTrigger } from '~/hooks/use-trigger';
+import { ArticleCardSkeleton } from '~/ui/article-card-skeleton';
+import { Notification } from '~/ui/notification';
 
 export function OnThisDayContent() {
   const result = useOnThisDayQuery();

@@ -1,5 +1,5 @@
-import { PageCardContext, usePageCardContext } from './page-card-context';
-import { WikiPage } from '../schema/wiki-page';
+import { WikiPage } from '~/schema/wiki-page';
+import { PageCardContext, usePageCardContext } from '~/ui/page-card-context';
 
 export type PageCardProps = {
   page: WikiPage;

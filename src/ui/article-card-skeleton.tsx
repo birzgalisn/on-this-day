@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { EventCardSkeleton } from './event-card-skeleton';
+import { EventCardSkeleton } from '~/ui/event-card-skeleton';
 
 export type ArticleCardSkeletonProps = {
   eventCount?: number;

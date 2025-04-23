@@ -1,4 +1,4 @@
-import { WikiOnThisDayType } from '../schema/wiki-on-this-day';
+import { WikiOnThisDayType } from '~/schema/wiki-on-this-day';
 
 export const WIKI_ON_THIS_DAY_TYPE_MAP = Object.freeze({
   selected: 'Curated set of events that occurred on the given date',

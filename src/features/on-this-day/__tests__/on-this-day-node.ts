@@ -1,7 +1,7 @@
 import { delay, http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
-import { WikiOnThisDayType } from '../../../schema/wiki-on-this-day';
-import data from '../__mocks__/on-this-day.json';
+import { WikiOnThisDayType } from '~/schema/wiki-on-this-day';
+import data from '~/features/on-this-day/__mocks__/on-this-day.json';
 
 const path =
   'https://en.wikipedia.org/api/rest_v1/feed/onthisday/:type/:month/:day';

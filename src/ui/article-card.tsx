@@ -1,12 +1,16 @@
 import {
   ArticleCardContext,
   useArticleCardContext,
-} from './article-card-context';
-import { Paginator, PaginatorEntriesProps, PaginatorProps } from './paginator';
-import { EventCard } from './event-card';
-import { WikiOnThisDayType } from '../schema/wiki-on-this-day';
-import { WikiEvent } from '../schema/wiki-event';
-import { WIKI_ON_THIS_DAY_TYPE_MAP } from '../constants/wiki-on-this-day-type-map';
+} from '~/ui/article-card-context';
+import {
+  Paginator,
+  PaginatorEntriesProps,
+  PaginatorProps,
+} from '~/ui/paginator';
+import { EventCard } from '~/ui/event-card';
+import { WikiOnThisDayType } from '~/schema/wiki-on-this-day';
+import { WikiEvent } from '~/schema/wiki-event';
+import { WIKI_ON_THIS_DAY_TYPE_MAP } from '~/constants/wiki-on-this-day-type-map';
 
 export type ArticleCardProps = {
   type: WikiOnThisDayType;

@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { WikiPage } from '../schema/wiki-page';
+import { WikiPage } from '~/schema/wiki-page';
 
 export const PageCardContext = createContext<{
   page: WikiPage;

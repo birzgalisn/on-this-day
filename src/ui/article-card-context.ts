@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
-import { WikiOnThisDayType } from '../schema/wiki-on-this-day';
-import { WikiEvent } from '../schema/wiki-event';
+import { WikiOnThisDayType } from '~/schema/wiki-on-this-day';
+import { WikiEvent } from '~/schema/wiki-event';
 
 export const ArticleCardContext = createContext<{
   type: WikiOnThisDayType;

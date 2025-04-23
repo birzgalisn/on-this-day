@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { wikiEventSchema } from './wiki-event';
+import { wikiEventSchema } from '~/schema/wiki-event';
 
 export const wikiOnThisDaySchema = z
   .object({

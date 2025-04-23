@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { DEFAULT_ON_THIS_DAY_PAGE_SIZE } from '../constants/page';
-import { onThisDayApi } from '../services/on-this-day-service';
-import { WikiOnThisDayType } from '../../../schema/wiki-on-this-day';
-import { PaginationMetadata } from '../../../hooks/use-pagination';
-import { buildInitialPagination } from '../../../lib/build-initial-pagination';
-import { getWikiOnThisDayEntries } from '../../../lib/get-wiki-on-this-day-entries';
+import { DEFAULT_ON_THIS_DAY_PAGE_SIZE } from '~/features/on-this-day/constants/page';
+import { onThisDayApi } from '~/features/on-this-day/services/on-this-day-service';
+import { WikiOnThisDayType } from '~/schema/wiki-on-this-day';
+import { PaginationMetadata } from '~/hooks/use-pagination';
+import { buildInitialPagination } from '~/lib/build-initial-pagination';
+import { getWikiOnThisDayEntries } from '~/lib/get-wiki-on-this-day-entries';
 
 export type OnThisDayState = {
   isoDate?: string;

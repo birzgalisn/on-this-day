@@ -1,5 +1,5 @@
-import { getReadableOnThisDayError } from '../lib/get-readable-on-this-day-error';
-import { Modal, ModalProps } from '../../../ui/modal';
+import { getReadableOnThisDayError } from '~/features/on-this-day/lib/get-readable-on-this-day-error';
+import { Modal, ModalProps } from '~/ui/modal';
 
 export type OnThisDayErrorModalProps = {
   error: unknown;

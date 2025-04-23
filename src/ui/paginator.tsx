@@ -1,12 +1,12 @@
 import React, { useId } from 'react';
-import { PaginatorContext, usePaginatorContext } from './paginator-context';
-import { DEFAULT_PAGE } from '../constants/page';
-import { ChevronLeft } from '../icons/chevron-left';
-import { ChevronRight } from '../icons/chevron-right';
-import { buildInitialPagination } from '../lib/build-initial-pagination';
-import { PaginationMetadata, usePagination } from '../hooks/use-pagination';
-import { useVisiblePages } from '../hooks/use-visible-pages';
-import { Button } from './button';
+import { PaginatorContext, usePaginatorContext } from '~/ui/paginator-context';
+import { DEFAULT_PAGE } from '~/constants/page';
+import { ChevronLeft } from '~/icons/chevron-left';
+import { ChevronRight } from '~/icons/chevron-right';
+import { buildInitialPagination } from '~/lib/build-initial-pagination';
+import { PaginationMetadata, usePagination } from '~/hooks/use-pagination';
+import { useVisiblePages } from '~/hooks/use-visible-pages';
+import { Button } from '~/ui/button';
 import './paginator.css';
 
 export type PaginatorProps<T> = {

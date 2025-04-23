@@ -1,7 +1,7 @@
-import { OnThisDayNavigation } from './on-this-day-navigation';
+import { OnThisDayNavigation } from '~/features/on-this-day/components/on-this-day-navigation';
 import './on-this-day-container.css';
 
-export type OnThisDayContainerProps = {} & React.HTMLProps<HTMLDivElement>;
+export type OnThisDayContainerProps = React.HTMLProps<HTMLDivElement>;
 
 export function OnThisDayContainer({
   className = '',

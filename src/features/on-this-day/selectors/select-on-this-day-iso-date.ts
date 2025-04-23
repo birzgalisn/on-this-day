@@ -1,5 +1,5 @@
-import { createOnThisDayDraftSafeSelector } from '../lib/create-on-this-day-draft-safe-selector';
-import { selectOnThisDayState } from './select-on-this-day-state';
+import { createOnThisDayDraftSafeSelector } from '~/features/on-this-day/lib/create-on-this-day-draft-safe-selector';
+import { selectOnThisDayState } from '~/features/on-this-day/selectors/select-on-this-day-state';
 
 export const selectOnThisDayIsoDate = createOnThisDayDraftSafeSelector(
   selectOnThisDayState,

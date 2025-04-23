@@ -1,10 +1,10 @@
-import { ZodError, ZodSchema } from 'zod';
-import type {
+import {
   BaseQueryFn,
   FetchArgs,
   FetchBaseQueryError,
   FetchBaseQueryMeta,
 } from '@reduxjs/toolkit/query/react';
+import { ZodError, ZodSchema } from 'zod';
 
 type BaseQuery = BaseQueryFn<
   string | FetchArgs,

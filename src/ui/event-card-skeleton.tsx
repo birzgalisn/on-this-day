@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { PageCardSkeleton } from './page-card-skeleton';
+import { PageCardSkeleton } from '~/ui/page-card-skeleton';
 
 export type EventCardSkeletonProps = {
   pageCount?: number;

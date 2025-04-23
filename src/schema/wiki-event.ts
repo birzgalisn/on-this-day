@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { wikiPageSchema } from './wiki-page';
+import { wikiPageSchema } from '~/schema/wiki-page';
 
 export const wikiEventSchema = z.object({
   text: z.string(),

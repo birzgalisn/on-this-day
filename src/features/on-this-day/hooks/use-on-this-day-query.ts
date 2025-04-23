@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
-import { useGetEventsQuery } from '../services/on-this-day-service';
-import { useOnThisDaySelector } from './use-on-this-day-selector';
-import { selectOnThisDayIsoDate } from '../selectors/select-on-this-day-iso-date';
-import { getWikiOnThisDayEntries } from '../../../lib/get-wiki-on-this-day-entries';
+import { useGetEventsQuery } from '~/features/on-this-day/services/on-this-day-service';
+import { useOnThisDaySelector } from '~/features/on-this-day/hooks/use-on-this-day-selector';
+import { selectOnThisDayIsoDate } from '~/features/on-this-day/selectors/select-on-this-day-iso-date';
+import { getWikiOnThisDayEntries } from '~/lib/get-wiki-on-this-day-entries';
 
 export function useOnThisDayQuery({
   skipEntries = false,

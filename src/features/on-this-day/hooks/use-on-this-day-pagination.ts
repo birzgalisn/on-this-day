@@ -1,13 +1,13 @@
-import { useOnThisDayDispatch } from './use-on-this-day-dispatch';
-import { useOnThisDaySelector } from './use-on-this-day-selector';
-import { paginate } from '../slices/on-this-day-slice';
+import { useOnThisDayDispatch } from '~/features/on-this-day/hooks/use-on-this-day-dispatch';
+import { useOnThisDaySelector } from '~/features/on-this-day/hooks/use-on-this-day-selector';
+import { paginate } from '~/features/on-this-day/slices/on-this-day-slice';
 import {
   PaginationMetadata,
   UsePaginationProps,
   UsePaginationReturn,
-} from '../../../hooks/use-pagination';
-import { useArticleCardContext } from '../../../ui/article-card-context';
-import { getPageEntries } from '../../../lib/get-page-entries';
+} from '~/hooks/use-pagination';
+import { useArticleCardContext } from '~/ui/article-card-context';
+import { getPageEntries } from '~/lib/get-page-entries';
 
 export function useOnThisDayPagination({
   entries,

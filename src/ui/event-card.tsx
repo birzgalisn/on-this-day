@@ -1,8 +1,12 @@
-import { EventCardContext, useEventCardContext } from './event-card-context';
-import { PageCard } from './page-card';
-import { Paginator, PaginatorEntriesProps, PaginatorProps } from './paginator';
-import { WikiEvent } from '../schema/wiki-event';
-import { WikiPage } from '../schema/wiki-page';
+import { WikiEvent } from '~/schema/wiki-event';
+import { WikiPage } from '~/schema/wiki-page';
+import { EventCardContext, useEventCardContext } from '~/ui/event-card-context';
+import { PageCard } from '~/ui/page-card';
+import {
+  Paginator,
+  PaginatorEntriesProps,
+  PaginatorProps,
+} from '~/ui/paginator';
 
 export type EventCardProps = {
   event: WikiEvent;

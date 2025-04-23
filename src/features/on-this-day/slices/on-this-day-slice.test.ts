@@ -1,16 +1,19 @@
 import { waitFor } from '@testing-library/react';
-import { onThisDayServer } from '../__tests__/on-this-day-node';
-import { renderHookWithProviders } from '../__tests__/on-this-day-utils';
-import { DEFAULT_ON_THIS_DAY_PAGE_SIZE } from '../constants/page';
-import { useGetEventsQuery } from '../services/on-this-day-service';
-import { RootOnThisDayState } from '../store/on-this-day-store';
-import { onThisDayReducer, paginate } from './on-this-day-slice';
-import { PaginationMetadata } from '../../../hooks/use-pagination';
+import { onThisDayServer } from '~/features/on-this-day/__tests__/on-this-day-node';
+import { renderHookWithProviders } from '~/features/on-this-day/__tests__/on-this-day-utils';
+import { DEFAULT_ON_THIS_DAY_PAGE_SIZE } from '~/features/on-this-day/constants/page';
+import { useGetEventsQuery } from '~/features/on-this-day/services/on-this-day-service';
+import { RootOnThisDayState } from '~/features/on-this-day/store/on-this-day-store';
+import {
+  onThisDayReducer,
+  paginate,
+} from '~/features/on-this-day/slices/on-this-day-slice';
+import { PaginationMetadata } from '~/hooks/use-pagination';
 import {
   DEFAULT_PAGE,
   DEFAULT_PAGE_SIZE,
   DEFAULT_PAGE_SURROUNDING,
-} from '../../../constants/page';
+} from '~/constants/page';
 
 const PAGINATION = {
   page: DEFAULT_PAGE,

@@ -1,9 +1,9 @@
 import { memo } from 'react';
 import { formatDate, subDays, addDays } from 'date-fns';
-import { getLeapYearIsoDate } from '../lib/get-leap-year-iso-date';
-import { ChevronLeft } from '../icons/chevron-left';
-import { ChevronRight } from '../icons/chevron-right';
-import { Button } from './button';
+import { getLeapYearIsoDate } from '~/lib/get-leap-year-iso-date';
+import { ChevronLeft } from '~/icons/chevron-left';
+import { ChevronRight } from '~/icons/chevron-right';
+import { Button } from '~/ui/button';
 
 export type DatePickerProps = {
   isoDate: string;

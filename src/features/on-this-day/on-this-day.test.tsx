@@ -1,15 +1,15 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ZodError } from 'zod';
+import { WIKI_ON_THIS_DAY_TYPE_MAP } from '~/constants/wiki-on-this-day-type-map';
 import {
   mockOnThisDayResponse,
   mockOnThisDayServerError,
   onThisDayServer,
-} from './__tests__/on-this-day-node';
-import { renderWithProviders } from './__tests__/on-this-day-utils';
-import { getReadableOnThisDayError } from './lib/get-readable-on-this-day-error';
-import { WIKI_ON_THIS_DAY_TYPE_MAP } from '../../constants/wiki-on-this-day-type-map';
-import { OnThisDay } from './on-this-day';
+} from '~/features/on-this-day/__tests__/on-this-day-node';
+import { renderWithProviders } from '~/features/on-this-day/__tests__/on-this-day-utils';
+import { getReadableOnThisDayError } from '~/features/on-this-day/lib/get-readable-on-this-day-error';
+import { OnThisDay } from '~/features/on-this-day/on-this-day';
 
 describe('OnThisDay', () => {
   beforeAll(() => onThisDayServer.listen());

@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { WikiEvent } from '../schema/wiki-event';
+import { WikiEvent } from '~/schema/wiki-event';
 
 export const EventCardContext = createContext<{
   event: WikiEvent;

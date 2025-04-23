@@ -1,8 +1,7 @@
-import { useOnThisDayNavigation } from '../hooks/use-on-this-day-navigation';
-import { getLeapYearIsoDate } from '../../../lib/get-leap-year-iso-date';
-import { DatePicker } from '../../../ui/date-picker';
-import { Button } from '../../../ui/button';
-import './on-this-day-navigation.css';
+import { useOnThisDayNavigation } from '~/features/on-this-day/hooks/use-on-this-day-navigation';
+import { getLeapYearIsoDate } from '~/lib/get-leap-year-iso-date';
+import { DatePicker } from '~/ui/date-picker';
+import { Button } from '~/ui/button';
 
 export function OnThisDayNavigation() {
   const [{ disabled, isoDate }, handleIsoDateChange] = useOnThisDayNavigation();

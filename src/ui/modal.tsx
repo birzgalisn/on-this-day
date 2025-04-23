@@ -1,5 +1,5 @@
-import { Cross } from '../icons/cross';
-import { Button } from './button';
+import { Cross } from '~/icons/cross';
+import { Button } from '~/ui/button';
 import './modal.css';
 
 export type ModalProps = {

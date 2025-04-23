@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux';
-import { setupOnThisDayStore } from './store/on-this-day-store';
-import { OnThisDay } from './on-this-day';
+import { setupOnThisDayStore } from '~/features/on-this-day/store/on-this-day-store';
+import { OnThisDay } from '~/features/on-this-day/on-this-day';
 
 export function OnThisDayFeature() {
   return (
