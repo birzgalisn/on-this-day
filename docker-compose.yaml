@@ -13,7 +13,7 @@ services:
     command: npm run dev -- --host
     env_file: .env
     volumes:
-      - ./:/app
+      - .:/app
     labels:
       - traefik.enable=true
       - traefik.http.routers.vite.rule=Host(`${CNAME}`)

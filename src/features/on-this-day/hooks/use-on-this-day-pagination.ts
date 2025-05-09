@@ -1,12 +1,12 @@
 import { useOnThisDayDispatch } from '~/features/on-this-day/hooks/use-on-this-day-dispatch';
 import { useOnThisDaySelector } from '~/features/on-this-day/hooks/use-on-this-day-selector';
-import { paginate } from '~/features/on-this-day/slices/on-this-day-slice';
+import { paginate } from '~/features/on-this-day/slices/on-this-day-pagination-slice';
 import {
   PaginationMetadata,
   UsePaginationProps,
   UsePaginationReturn,
 } from '~/hooks/use-pagination';
-import { useArticleCardContext } from '~/ui/article-card-context';
+import { useArticleCardContext } from '~/ui/article-card/article-card-context';
 import { getPageEntries } from '~/lib/get-page-entries';
 
 export function useOnThisDayPagination({
@@ -18,7 +18,7 @@ export function useOnThisDayPagination({
   const { type } = useArticleCardContext();
 
   const pagination = useOnThisDaySelector(
-    (state) => state.onThisDay.pagination[type] ?? initialPagination,
+    (state) => state.onThisDayPagination.pagination[type] ?? initialPagination,
   );
 
   const updatePagination = (newPagination: Partial<PaginationMetadata>) => {

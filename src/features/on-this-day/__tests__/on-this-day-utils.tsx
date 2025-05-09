@@ -4,11 +4,11 @@ import { RenderOptions } from '@testing-library/react';
 import {
   setupOnThisDayStore,
   OnThisDayStore,
-  RootOnThisDayState,
+  OnThisDayRootState,
 } from '~/features/on-this-day/store/on-this-day-store';
 
 type ExtendedRenderOptions = {
-  preloadedState?: Partial<RootOnThisDayState>;
+  preloadedState?: Partial<OnThisDayRootState>;
   store?: OnThisDayStore;
 } & Omit<RenderOptions, 'queries'>;
 

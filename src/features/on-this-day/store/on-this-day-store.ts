@@ -1,15 +1,17 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { onThisDayApi } from '~/features/on-this-day/services/on-this-day-service';
-import { onThisDayReducer } from '~/features/on-this-day/slices/on-this-day-slice';
+import { onThisDayParamsReducer } from '~/features/on-this-day/slices/on-this-day-params-slice';
+import { onThisDayPaginationReducer } from '~/features/on-this-day/slices/on-this-day-pagination-slice';
 
 const rootReducer = combineReducers({
   [onThisDayApi.reducerPath]: onThisDayApi.reducer,
-  onThisDay: onThisDayReducer,
+  onThisDayParams: onThisDayParamsReducer,
+  onThisDayPagination: onThisDayPaginationReducer,
 });
 
 export function setupOnThisDayStore(
-  preloadedState?: Partial<RootOnThisDayState>,
+  preloadedState?: Partial<OnThisDayRootState>,
 ) {
   const store = configureStore({
     reducer: rootReducer,
@@ -24,7 +26,7 @@ export function setupOnThisDayStore(
   return store;
 }
 
-export type RootOnThisDayState = ReturnType<typeof rootReducer>;
+export type OnThisDayRootState = ReturnType<typeof rootReducer>;
 
 export type OnThisDayStore = ReturnType<typeof setupOnThisDayStore>;
 

@@ -1,7 +1,7 @@
 import {
   wikiOnThisDaySchema,
   WikiOnThisDayType,
-} from '~/schema/wiki-on-this-day';
+} from '~/schemas/wiki-on-this-day';
 
 export function isWikiOnThisDayType(
   value: unknown,

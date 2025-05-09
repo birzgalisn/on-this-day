@@ -1,16 +1,16 @@
+import * as stylex from '@stylexjs/stylex';
+import { globalTokens as $, spacing, text } from '~/global-tokens.stylex';
 import { OnThisDayNavigation } from '~/features/on-this-day/components/on-this-day-navigation';
-import './on-this-day-container.css';
 
 export type OnThisDayContainerProps = React.HTMLProps<HTMLDivElement>;
 
 export function OnThisDayContainer({
-  className = '',
   children,
   ...props
 }: OnThisDayContainerProps) {
   return (
-    <div className={`on-this-day ${className}`} {...props}>
-      <h1>On this day</h1>
+    <div {...stylex.props(styles.container)} {...props}>
+      <h1 {...stylex.props(styles.title)}>On this day</h1>
 
       <OnThisDayNavigation />
 
@@ -18,3 +18,18 @@ export function OnThisDayContainer({
     </div>
   );
 }
+
+const styles = stylex.create({
+  container: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: spacing.md,
+    height: '100%',
+    justifyContent: 'center',
+  },
+  title: {
+    fontFamily: $.fontSans,
+    fontSize: text.h1,
+  },
+});

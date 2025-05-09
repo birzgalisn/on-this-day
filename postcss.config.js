@@ -4,11 +4,10 @@ import babelConfig from './babel.config.js';
 const postcssConfig = {
   plugins: {
     '@stylexjs/postcss-plugin': {
-      include: ['./**/*.{js,jsx,ts,tsx}'],
+      include: ['**/*.{js,jsx,ts,tsx}'],
       useCSSLayers: true,
       babelConfig,
     },
-    autoprefixer: {},
   },
 };
 

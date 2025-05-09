@@ -1,27 +1,18 @@
-import { useMemo } from 'react';
 import { useGetEventsQuery } from '~/features/on-this-day/services/on-this-day-service';
 import { useOnThisDaySelector } from '~/features/on-this-day/hooks/use-on-this-day-selector';
-import { selectOnThisDayIsoDate } from '~/features/on-this-day/selectors/select-on-this-day-iso-date';
-import { getWikiOnThisDayEntries } from '~/lib/get-wiki-on-this-day-entries';
+import { selectOnThisDayParamsIsoDate } from '~/features/on-this-day/selectors/select-on-this-day-params-date';
+import { selectOnThisDayParamsType } from '../selectors/select-on-this-day-params-type';
 
-export function useOnThisDayQuery({
-  skipEntries = false,
-}: { skipEntries?: boolean } = {}) {
-  const isoDate = useOnThisDaySelector(selectOnThisDayIsoDate);
+export function useOnThisDayQuery() {
+  const isoDate = useOnThisDaySelector(selectOnThisDayParamsIsoDate);
+  const type = useOnThisDaySelector(selectOnThisDayParamsType);
 
   const result = useGetEventsQuery(
-    { isoDate },
+    { type, isoDate },
     { skip: !isoDate, refetchOnMountOrArgChange: true },
   );
 
-  const entries = useMemo(() => {
-    if (skipEntries || !result.data) {
-      return [];
-    }
-
-    return getWikiOnThisDayEntries(result.data);
-  }, [skipEntries, result.data]);
-
+  const entries = result.data?.[type] ?? [];
   const isEmpty = result.isSuccess && entries.length === 0;
   const isRenderable = result.isSuccess && entries.length > 0;
   const isSkeleton = (result.isFetching && !isRenderable) || result.isLoading;

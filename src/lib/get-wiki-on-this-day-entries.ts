@@ -1,4 +1,4 @@
-import { WikiOnThisDayType } from '~/schema/wiki-on-this-day';
+import { WikiOnThisDayType } from '~/schemas/wiki-on-this-day';
 import { isWikiOnThisDayType } from '~/lib/is-wiki-on-this-day-type';
 
 export function getWikiOnThisDayEntries<T>(data: Record<string, T[]>) {

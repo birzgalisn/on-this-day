@@ -2,7 +2,11 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { format } from 'date-fns';
 import { baseQueryWithValidation } from '~/lib/base-query-with-validation';
 import { getLeapYearIsoDate } from '~/lib/get-leap-year-iso-date';
-import { WikiOnThisDay, wikiOnThisDaySchema } from '~/schema/wiki-on-this-day';
+import {
+  WikiOnThisDay,
+  wikiOnThisDaySchema,
+  WikiOnThisDayType,
+} from '~/schemas/wiki-on-this-day';
 
 export const onThisDayApi = createApi({
   reducerPath: 'onThisDayApi',
@@ -12,9 +16,12 @@ export const onThisDayApi = createApi({
     }),
   ),
   endpoints: (builder) => ({
-    getEvents: builder.query<WikiOnThisDay, { isoDate?: string } | void>({
-      query({ isoDate = getLeapYearIsoDate() } = {}) {
-        return `all/${format(isoDate, 'MM/dd')}`;
+    getEvents: builder.query<
+      WikiOnThisDay,
+      { type: WikiOnThisDayType; isoDate?: string }
+    >({
+      query({ type, isoDate = getLeapYearIsoDate() }) {
+        return `${type}/${format(isoDate, 'MM/dd')}`;
       },
       extraOptions: {
         dataSchema: wikiOnThisDaySchema,

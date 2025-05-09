@@ -8,13 +8,17 @@ import babelConfig from './babel.config.js';
 export default defineConfig({
   plugins: [react({ babel: babelConfig })],
   resolve: {
-    alias: { '~': path.resolve(import.meta.dirname, 'src') },
+    alias: {
+      '~': path.resolve(import.meta.dirname, 'src'),
+    },
   },
   test: {
     environment: 'jsdom',
     globals: true,
     css: true,
     setupFiles: 'src/__tests__/setup.ts',
-    coverage: { provider: 'v8' },
+    coverage: {
+      provider: 'v8',
+    },
   },
 });
